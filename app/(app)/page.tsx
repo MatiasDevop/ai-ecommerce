@@ -1,7 +1,16 @@
-import { FeaturedCarousel } from "@/components/FeaturedCarousel";
+import { CategoryTiles } from "@/components/app/CategoryTiles";
+import { FeaturedCarousel } from "@/components/app/FeaturedCarousel";
+import { FeaturedCarouselSkeleton } from "@/components/app/FeaturedCarouselSkeleton";
+import { ProductSection } from "@/components/app/ProductSection";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_CATEGORIES_QUERY } from "@/sanity/queries/categories";
-import { FEATURED_PRODUCTS_QUERY, FILTER_PRODUCTS_BY_NAME_QUERY, FILTER_PRODUCTS_BY_PRICE_ASC_QUERY, FILTER_PRODUCTS_BY_PRICE_DESC_QUERY, FILTER_PRODUCTS_BY_RELEVANCE_QUERY } from "@/sanity/queries/products";
+import {
+  FEATURED_PRODUCTS_QUERY,
+  FILTER_PRODUCTS_BY_NAME_QUERY,
+  FILTER_PRODUCTS_BY_PRICE_ASC_QUERY,
+  FILTER_PRODUCTS_BY_PRICE_DESC_QUERY,
+  FILTER_PRODUCTS_BY_RELEVANCE_QUERY,
+} from "@/sanity/queries/products";
 import { Suspense } from "react";
 
 interface PageProps {
@@ -18,7 +27,7 @@ interface PageProps {
 }
 
 export default async function Home({ searchParams }: PageProps) {
-const params = await searchParams;
+  const params = await searchParams;
 
   const searchQuery = params.q ?? "";
   const categorySlug = params.category ?? "";
@@ -47,7 +56,7 @@ const params = await searchParams;
         return FILTER_PRODUCTS_BY_NAME_QUERY;
     }
   };
-  
+
   // Fetch products with filters (server-side via GROQ)
   const { data: products } = await sanityFetch({
     query: getQuery(),
@@ -63,26 +72,51 @@ const params = await searchParams;
   });
   const { data: categories } = await sanityFetch({
     query: ALL_CATEGORIES_QUERY,
-    });
+  });
 
-    // Fetch feautered products for the carousel
-    const { data: featuredProducts } = await sanityFetch({
-      query: FEATURED_PRODUCTS_QUERY,
-    });
+  // Fetch feautered products for the carousel
+  const { data: featuredProducts } = await sanityFetch({
+    query: FEATURED_PRODUCTS_QUERY,
+  });
 
-    console.log('Products:', products);
-    console.log('Featured Products:', featuredProducts);
-    console.log('Categories:', categories);
+  console.log("Products:", products);
+  console.log("Featured Products:", featuredProducts);
+  console.log("Categories:", categories);
 
   return (
     <div className="">
       {/* Featured Products Carousel */}
-      <Suspense fallback={<div>Loading featured products...</div>}>
+      <Suspense fallback={<FeaturedCarouselSkeleton />}>
         <FeaturedCarousel products={featuredProducts} />
       </Suspense>
       {/* Page Banner */}
-      {/* Category Tiles */}
-      {/* New Arrivals Section */}
+      <div className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
+        <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
+          <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+            Shop {categorySlug ? categorySlug : "All Products"}
+          </h1>
+          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+            Premium furniture for your home
+          </p>
+        </div>
+
+        {/* Category Tiles - Full width */}
+        <div className="mt-6">
+          <CategoryTiles
+            categories={categories}
+            activeCategory={categorySlug || undefined}
+          />
+        </div>
+      </div>
+
+      {/* Products Section */}
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <ProductSection
+          categories={categories}
+          products={products}
+          searchQuery={searchQuery}
+        />
+      </div>
     </div>
   );
 }
