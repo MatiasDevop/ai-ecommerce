@@ -52,7 +52,7 @@ export function FeaturedCarousel({ products }: FeaturedCarouselProps) {
   }
 
   return (
-    <div className="relative w-full bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950">
+    <div className="relative w-full bg-linear-to-br from-zinc-900 via-zinc-800 to-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950">
       <Carousel
         setApi={setApi}
         opts={{
@@ -86,7 +86,7 @@ export function FeaturedCarousel({ products }: FeaturedCarouselProps) {
         <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2 sm:bottom-6">
           {Array.from({ length: count }).map((_, index) => (
             <button
-              key={`dot-${index}`}
+              key={`dot-${index + 1}`}
               type="button"
               onClick={() => scrollTo(index)}
               className={cn(

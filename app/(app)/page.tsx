@@ -76,7 +76,6 @@ const params = await searchParams;
 
   return (
     <div className="">
-      hello world
       {/* Featured Products Carousel */}
       <Suspense fallback={<div>Loading featured products...</div>}>
         <FeaturedCarousel products={featuredProducts} />
