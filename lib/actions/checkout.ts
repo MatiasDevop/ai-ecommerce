@@ -40,7 +40,7 @@ export async function createCheckoutSession(
     // 1. Verify user is authenticated
     const { userId } = await auth();
     const user = await currentUser();
-
+    console.log("items:::", items);
     if (!userId || !user) {
       return { success: false, error: "Please sign in to checkout" };
     }
@@ -131,7 +131,7 @@ export async function createCheckoutSession(
     const baseUrl =
       process.env.NEXT_PUBLIC_BASE_URL ||
       (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ||
-      "http://localhost:3000";
+      "http://localhost:3001";
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
@@ -212,6 +212,8 @@ export async function createCheckoutSession(
  * Retrieves a checkout session by ID (for success page)
  */
 export async function getCheckoutSession(sessionId: string) {
+  console.log("sessionId:::", sessionId);
+
   try {
     const { userId } = await auth();
 
