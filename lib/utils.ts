@@ -34,3 +34,34 @@ const DATE_FORMAT_OPTIONS: Record<
     minute: "2-digit",
   },
 };
+
+/**
+ * Format a date string with locale-specific formatting
+ * @param date - ISO date string (can be null/undefined)
+ * @param format - Format option: "short" (5 Jan), "long" (5 January 2025), "datetime" (5 January 2025, 14:30)
+ * @param fallback - Fallback text when date is null/undefined
+ * @returns Formatted date string
+ */
+export function formatDate(
+  date: string | null | undefined,
+  format: DateFormatOption = "long",
+  fallback = "Date unknown"
+): string {
+  if (!date) return fallback;
+  return new Date(date).toLocaleDateString(
+    "en-GB",
+    DATE_FORMAT_OPTIONS[format]
+  );
+}
+
+/**
+ * Format an order number for display (shows only the last segment after the last hyphen)
+ * @param orderNumber - Full order number (e.g., "ORD-2024-ABC123")
+ * @returns Shortened order number (e.g., "ABC123") or "N/A" if null
+ */
+export function formatOrderNumber(
+  orderNumber: string | null | undefined
+): string {
+  if (!orderNumber) return "N/A";
+  return orderNumber.split("-").pop() ?? orderNumber;
+}
