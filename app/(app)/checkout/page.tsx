@@ -5,7 +5,5 @@ export const metadata = {
   description: "Complete your purchase",
 };
 export default function CheckoutPage() {
-  return (
-    <CheckoutClient />
-  )
+  return <CheckoutClient />;
 }

@@ -13,7 +13,7 @@ export function MessageBubble({
   closeChat,
 }: MessageBubbleProps) {
   const isUser = role === "user";
-
+  console.log("MessageBubble content:...", content);
   return (
     <div className={`flex gap-3 ${isUser ? "flex-row-reverse" : "flex-row"}`}>
       {/* Avatar */}

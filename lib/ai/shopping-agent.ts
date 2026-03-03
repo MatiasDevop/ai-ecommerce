@@ -1,6 +1,10 @@
-import { gateway, type Tool, ToolLoopAgent } from "ai";
+import { type Tool, ToolLoopAgent } from "ai";
+import { createOpenAI } from "@ai-sdk/openai";
 import { searchProductsTool } from "./tools/search-products";
 import { createGetMyOrdersTool } from "./tools/get-my-orders";
+
+const OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1";
+const DEFAULT_OPENROUTER_MODEL = "nvidia/nemotron-nano-9b-v2:free"; // A powerful open-source model available for free on Open Router
 
 interface ShoppingAgentOptions {
   userId: string | null;
@@ -183,6 +187,22 @@ The user is not signed in. If they ask about orders, politely let them know they
  * Creates a shopping agent with tools based on user authentication status
  */
 export function createShoppingAgent({ userId }: ShoppingAgentOptions) {
+  const openRouterApiKey = process.env.OPENROUTER_API_KEY;
+
+  if (!openRouterApiKey) {
+    throw new Error(
+      "Missing OPENROUTER_API_KEY. Add it to your environment to enable AI chat.",
+    );
+  }
+
+  const openRouterModel =
+    process.env.OPENROUTER_MODEL?.trim() || DEFAULT_OPENROUTER_MODEL;
+
+  const openRouter = createOpenAI({
+    apiKey: openRouterApiKey,
+    baseURL: OPENROUTER_BASE_URL,
+  });
+
   const isAuthenticated = !!userId;
 
   // Build instructions based on authentication
@@ -202,7 +222,7 @@ export function createShoppingAgent({ userId }: ShoppingAgentOptions) {
   }
 
   return new ToolLoopAgent({
-    model: gateway("nvidia/nemotron-3-nano-30b-a3b:free"),
+    model: openRouter.chat(openRouterModel),
     instructions,
     tools,
   });
