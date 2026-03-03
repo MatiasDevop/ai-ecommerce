@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import { sanityFetch } from "@/sanity/lib/live";
 import { ProductGallery } from "@/components/app/ProductGallery";
 import { ProductInfo } from "@/components/app/ProductInfo";
+import { sanityFetch } from "@/sanity/lib/live";
 import { PRODUCT_BY_SLUG_QUERY } from "@/sanity/queries/products";
 
 interface ProductPageProps {

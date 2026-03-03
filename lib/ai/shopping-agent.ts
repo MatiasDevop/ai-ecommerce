@@ -1,7 +1,7 @@
-import { type Tool, ToolLoopAgent } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
-import { searchProductsTool } from "./tools/search-products";
+import { type Tool, ToolLoopAgent } from "ai";
 import { createGetMyOrdersTool } from "./tools/get-my-orders";
+import { searchProductsTool } from "./tools/search-products";
 
 const OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1";
 const DEFAULT_OPENROUTER_MODEL = "nvidia/nemotron-nano-9b-v2:free"; // A powerful open-source model available for free on Open Router
