@@ -14,14 +14,14 @@ const productSearchSchema = z.object({
     .optional()
     .default("")
     .describe(
-      "Search term to find products by name, description, or category (e.g., 'oak table', 'leather sofa', 'dining')"
+      "Search term to find products by name, description, or category (e.g., 'oak table', 'leather sofa', 'dining')",
     ),
   category: z
     .string()
     .optional()
     .default("")
     .describe(
-      "Filter by category slug (e.g., 'sofas', 'tables', 'chairs', 'storage')"
+      "Filter by category slug (e.g., 'sofas', 'tables', 'chairs', 'storage')",
     ),
   material: z
     .enum(["", ...MATERIAL_VALUES])

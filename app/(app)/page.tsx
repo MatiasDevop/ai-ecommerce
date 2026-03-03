@@ -79,9 +79,9 @@ export default async function Home({ searchParams }: PageProps) {
     query: FEATURED_PRODUCTS_QUERY,
   });
 
-  console.log("Products:", products);
-  console.log("Featured Products:", featuredProducts);
-  console.log("Categories:", categories);
+  // console.log("Products:", products);
+  // console.log("Featured Products:", featuredProducts);
+  // console.log("Categories:", categories);
 
   return (
     <div className="">

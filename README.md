@@ -16,6 +16,23 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## AI Chat Configuration (OpenRouter)
+
+The shopping chat agent uses OpenRouter.
+
+Create a `.env.local` file in the project root with:
+
+```bash
+OPENROUTER_API_KEY=your_openrouter_api_key
+OPENROUTER_MODEL=meta-llama/llama-3.3-70b-instruct:free
+```
+
+Notes:
+
+- `OPENROUTER_API_KEY` is required.
+- `OPENROUTER_MODEL` is optional. If omitted, the default is `meta-llama/llama-3.3-70b-instruct:free`.
+- You can switch to any OpenRouter model by changing `OPENROUTER_MODEL`.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
