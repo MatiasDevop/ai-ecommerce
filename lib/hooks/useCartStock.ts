@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState, useCallback, useMemo } from "react";
-import { client } from "@/sanity/lib/client";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { CartItem } from "@/lib/store/cart-store";
+import { client } from "@/sanity/lib/client";
 import { PRODUCTS_BY_IDS_QUERY } from "@/sanity/queries/products";
 
 export interface StockInfo {

@@ -40,4 +40,4 @@ export interface SearchProductsResult {
 }
 
 // Re-export order types from the tool
-export type { OrderSummary, GetMyOrdersResult } from "./tools/get-my-orders";
+export type { GetMyOrdersResult, OrderSummary } from "./tools/get-my-orders";

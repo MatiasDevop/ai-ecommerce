@@ -1,12 +1,12 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { sanityFetch } from "@/sanity/lib/live";
-import { ORDERS_BY_USER_QUERY } from "@/sanity/queries/orders";
 import {
-  ORDER_STATUS_VALUES,
   getOrderStatusEmoji,
+  ORDER_STATUS_VALUES,
 } from "@/lib/constants/orderStatus";
 import { formatPrice } from "@/lib/utils";
+import { sanityFetch } from "@/sanity/lib/live";
+import { ORDERS_BY_USER_QUERY } from "@/sanity/queries/orders";
 import type { ORDERS_BY_USER_QUERYResult } from "@/sanity.types";
 
 const getMyOrdersSchema = z.object({

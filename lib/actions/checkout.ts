@@ -2,8 +2,8 @@
 
 import { auth, currentUser } from "@clerk/nextjs/server";
 import Stripe from "stripe";
-import { client } from "@/sanity/lib/client";
 import { getOrCreateStripeCustomer } from "@/lib/actions/customer";
+import { client } from "@/sanity/lib/client";
 import { PRODUCTS_BY_IDS_QUERY } from "@/sanity/queries/products";
 
 if (!process.env.STRIPE_SECRET_KEY) {
