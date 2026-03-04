@@ -54,12 +54,12 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Security Scanning (Snyk)
 
-This repository includes a GitHub Actions workflow at `.github/workflows/snyk.yml` that runs on pull requests and pushes to `main`.
+This repository includes a GitHub Actions workflow at `.github/workflows/snyk.yml` that runs on pull requests and pushes to `master`.
 
 ### GitHub setup
 
 1. In your repository, add a secret named `SNYK_TOKEN` under **Settings → Secrets and variables → Actions**.
-2. In GitHub branch protection for `main`, require the Snyk checks to pass before merge.
+2. In GitHub branch protection for `master`, require the Snyk checks to pass before merge.
 
 ### Local usage
 
