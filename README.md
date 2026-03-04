@@ -51,3 +51,29 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Security Scanning (Snyk)
+
+This repository includes a GitHub Actions workflow at `.github/workflows/snyk.yml` that runs on pull requests and pushes to `main`.
+
+### GitHub setup
+
+1. In your repository, add a secret named `SNYK_TOKEN` under **Settings → Secrets and variables → Actions**.
+2. In GitHub branch protection for `main`, require the Snyk checks to pass before merge.
+
+### Local usage
+
+Install and authenticate the Snyk CLI:
+
+```bash
+npm i -g snyk
+snyk auth
+```
+
+Run scans locally:
+
+```bash
+snyk test --all-projects --severity-threshold=high
+snyk code test --severity-threshold=high
+snyk monitor --all-projects
+```
