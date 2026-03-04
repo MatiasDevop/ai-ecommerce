@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { StackedProductImages } from "@/components/app/StackedProductImages";
 import type { OrderSummary } from "@/lib/ai/tools/get-my-orders";
 import { getOrderStatus } from "@/lib/constants/orderStatus";
 import { formatDate, formatOrderNumber } from "@/lib/utils";
-import { StackedProductImages } from "@/components/app/StackedProductImages";
+import type { Route } from "next";
 
 interface OrderCardWidgetProps {
   order: OrderSummary;
@@ -79,7 +80,11 @@ export function OrderCardWidget({ order, onClose }: OrderCardWidgetProps) {
     "group flex items-center gap-3 rounded-lg border border-zinc-200 bg-white p-3 transition-all duration-200 hover:border-amber-300 hover:shadow-md hover:shadow-amber-100/50 dark:border-zinc-700 dark:bg-zinc-800/50 dark:hover:border-amber-600/50 dark:hover:shadow-amber-900/20";
 
   return (
-    <Link href={order.orderUrl} onClick={handleClick} className={cardClasses}>
+    <Link
+      href={order.orderUrl as Route}
+      onClick={handleClick}
+      className={cardClasses}
+    >
       {cardContent}
     </Link>
   );

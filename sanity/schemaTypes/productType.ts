@@ -1,6 +1,9 @@
 import { PackageIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { MATERIALS_SANITY_LIST, COLORS_SANITY_LIST } from "@/lib/constants/filters";
+import {
+  COLORS_SANITY_LIST,
+  MATERIALS_SANITY_LIST,
+} from "@/lib/constants/filters";
 
 export const productType = defineType({
   name: "product",

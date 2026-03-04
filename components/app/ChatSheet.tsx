@@ -1,23 +1,24 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
 import { useChat } from "@ai-sdk/react";
 import { useAuth } from "@clerk/nextjs";
-import { Sparkles, Send, Loader2, X, Bot } from "lucide-react";
+import { Loader2, Send, Sparkles, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  useIsChatOpen,
   useChatActions,
+  useIsChatOpen,
   usePendingMessage,
 } from "@/lib/store/chat-store-provider";
 
 import {
   getMessageText,
   getToolParts,
-  WelcomeScreen,
+  LoadingIndicator,
   MessageBubble,
   ToolCallUI,
+  WelcomeScreen,
 } from "./chat";
 
 export function ChatSheet() {
@@ -31,6 +32,27 @@ export function ChatSheet() {
   // UseChat hook from ai-sdk/react is the most important part of the chat sheet. It is used to send and receive messages from the AI.
   const { messages, sendMessage, status } = useChat();
   const isLoading = status === "streaming" || status === "submitted";
+
+  // Show typing indicator until we get the first visible assistant response
+  const isWaitingForFirstResponse = (() => {
+    if (!isLoading || messages.length === 0) return false;
+
+    const lastUserIndex = [...messages].map((m) => m.role).lastIndexOf("user");
+
+    if (lastUserIndex === -1) return false;
+
+    for (let i = lastUserIndex + 1; i < messages.length; i++) {
+      const m = messages[i];
+      if (m.role !== "assistant") continue;
+
+      const hasText = getMessageText(m).trim().length > 0;
+      const hasTools = getToolParts(m).length > 0;
+
+      if (hasText || hasTools) return false;
+    }
+
+    return true;
+  })();
 
   // Auto-scroll to bottom when new messages arrive or streaming updates
   // biome-ignore lint/correctness/useExhaustiveDependencies: trigger scroll on message/loading changes
@@ -66,7 +88,7 @@ export function ChatSheet() {
       />
 
       {/* Sidebar */}
-      <div className="fixed top-0 right-0 z-50 flex h-full w-full flex-col border-l border-zinc-200 bg-white overscroll-contain dark:border-zinc-800 dark:bg-zinc-950 sm:w-[448px] animate-in slide-in-from-right duration-300">
+      <div className="fixed top-0 right-0 z-50 flex h-full w-full flex-col border-l border-zinc-200 bg-white overscroll-contain dark:border-zinc-800 dark:bg-zinc-950 sm:w-md animate-in slide-in-from-right duration-300">
         {/* Header */}
         <header className="shrink-0 border-b border-zinc-200 dark:border-zinc-800">
           <div className="flex h-16 items-center justify-between px-6">
@@ -122,20 +144,7 @@ export function ChatSheet() {
               })}
 
               {/* Loading indicator */}
-              {isLoading && messages[messages.length - 1]?.role === "user" && (
-                <div className="flex gap-3">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/30">
-                    <Bot className="h-4 w-4 text-amber-600 dark:text-amber-400" />
-                  </div>
-                  <div className="flex items-center gap-2 rounded-2xl bg-zinc-100 px-4 py-2 dark:bg-zinc-800">
-                    <div className="flex gap-1">
-                      <span className="h-2 w-2 animate-bounce rounded-full bg-amber-400 [animation-delay:-0.3s]" />
-                      <span className="h-2 w-2 animate-bounce rounded-full bg-amber-400 [animation-delay:-0.15s]" />
-                      <span className="h-2 w-2 animate-bounce rounded-full bg-amber-400" />
-                    </div>
-                  </div>
-                </div>
-              )}
+              {isWaitingForFirstResponse && <LoadingIndicator />}
 
               {/* Scroll anchor */}
               <div ref={messagesEndRef} />

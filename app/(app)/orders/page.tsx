@@ -1,12 +1,12 @@
-import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
-import { Package, ArrowRight } from "lucide-react";
+import { ArrowRight, Package } from "lucide-react";
+import Link from "next/link";
+import { StackedProductImages } from "@/components/app/StackedProductImages";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
-import { sanityFetch } from "@/sanity/lib/live";
 import { getOrderStatus } from "@/lib/constants/orderStatus";
-import { formatPrice, formatDate, formatOrderNumber } from "@/lib/utils";
-import { StackedProductImages } from "@/components/app/StackedProductImages";
+import { formatDate, formatOrderNumber, formatPrice } from "@/lib/utils";
+import { sanityFetch } from "@/sanity/lib/live";
 import { ORDERS_BY_USER_QUERY } from "@/sanity/queries/orders";
 
 export const metadata = {

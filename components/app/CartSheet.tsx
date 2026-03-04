@@ -7,13 +7,13 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { useCartStock } from "@/lib/hooks/useCartStock";
 import {
-  useCartItems,
-  useCartIsOpen,
   useCartActions,
+  useCartIsOpen,
+  useCartItems,
   useTotalItems,
 } from "@/lib/store/cart-store-provider";
-import { useCartStock } from "@/lib/hooks/useCartStock";
 import { CartItem } from "./CartItem";
 import { CartSummary } from "./CartSummary";
 
