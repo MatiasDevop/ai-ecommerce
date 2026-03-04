@@ -1,3 +1,4 @@
+import type { Route } from "next";
 import Link from "next/link";
 import Markdown from "react-markdown";
 
@@ -26,7 +27,7 @@ export function MessageContent({
           if (isInternalLink) {
             return (
               <Link
-                href={href}
+                href={href as Route}
                 onClick={handleCloseChat}
                 className="text-amber-600 hover:text-amber-700 underline underline-offset-2 transition-colors dark:text-amber-400 dark:hover:text-amber-300"
               >

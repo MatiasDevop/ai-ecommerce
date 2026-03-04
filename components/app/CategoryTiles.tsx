@@ -21,7 +21,7 @@ export function CategoryTiles({
         {/* All Products tile */}
         <Link
           href="/"
-          className={`group relative flex-shrink-0 overflow-hidden rounded-xl transition-all duration-300 ${
+          className={`group relative shrink-0 overflow-hidden rounded-xl transition-all duration-300 ${
             !activeCategory
               ? "ring-2 ring-amber-500 ring-offset-2 dark:ring-offset-zinc-900"
               : "hover:ring-2 hover:ring-zinc-300 hover:ring-offset-2 dark:hover:ring-zinc-600 dark:hover:ring-offset-zinc-900"
