@@ -54,12 +54,21 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Security Scanning (Snyk)
 
-This repository includes a GitHub Actions workflow at `.github/workflows/snyk.yml` that runs on pull requests and pushes to `master`.
+This repository includes a GitHub Actions workflow at `.github/workflows/snyk.yml` that runs on pull requests, pushes to `master`, and nightly on a schedule.
+
+[![Snyk Security](https://github.com/MatiasDevop/ai-ecommerce/actions/workflows/snyk.yml/badge.svg)](https://github.com/MatiasDevop/ai-ecommerce/actions/workflows/snyk.yml)
 
 ### GitHub setup
 
 1. In your repository, add a secret named `SNYK_TOKEN` under **Settings → Secrets and variables → Actions**.
 2. In GitHub branch protection for `master`, require the Snyk checks to pass before merge.
+
+### Automation behavior
+
+- PRs and `master` pushes run dependency and code scans.
+- A nightly scheduled run also scans and refreshes Snyk snapshots.
+- `snyk monitor` is run automatically on `master` push and nightly schedule.
+- You can manually trigger the workflow from GitHub Actions (`workflow_dispatch`) when needed: https://github.com/MatiasDevop/ai-ecommerce/actions/workflows/snyk.yml
 
 ### Local usage
 
@@ -76,4 +85,13 @@ Run scans locally:
 snyk test --all-projects --severity-threshold=high
 snyk code test --severity-threshold=high
 snyk monitor --all-projects
+```
+
+Or via project scripts:
+
+```bash
+pnpm snyk:test
+pnpm snyk:code
+pnpm snyk:local
+pnpm snyk:monitor
 ```

@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - master
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
 
 jobs:
   snyk:
@@ -38,7 +41,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test
-          args: --all-projects --severity-threshold=high
+          args: --all-projects --exclude=.next --severity-threshold=high
 
       - name: Run Snyk Code test
         uses: snyk/actions/node@master
@@ -47,3 +50,12 @@ jobs:
         with:
           command: code test
           args: --severity-threshold=high
+
+      - name: Monitor project in Snyk
+        if: github.event_name == 'push' || github.event_name == 'schedule'
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+          args: --all-projects --exclude=.next
