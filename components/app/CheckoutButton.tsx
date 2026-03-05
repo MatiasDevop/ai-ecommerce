@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { createCheckoutSession } from "@/lib/actions/checkout";
 import { useCartItems } from "@/lib/store/cart-store-provider";
+import { Route } from "next";
 
 interface CheckoutButtonProps {
   disabled?: boolean;
@@ -26,7 +27,7 @@ export function CheckoutButton({ disabled }: CheckoutButtonProps) {
 
       if (result.success && result.url) {
         // Redirect to Stripe Checkout
-        router.push(result.url);
+        router.push(result.url as Route);
       } else {
         setError(result.error ?? "Checkout failed");
         toast.error("Checkout Error", {

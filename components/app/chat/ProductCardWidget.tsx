@@ -2,6 +2,7 @@ import { Package } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { SearchProduct } from "@/lib/ai/types";
+import { Route } from "next";
 
 interface ProductCardWidgetProps {
   product: SearchProduct;
@@ -68,7 +69,7 @@ export function ProductCardWidget({ product, onClose }: ProductCardWidgetProps) 
 
   if (product.productUrl) {
     return (
-      <Link href={product.productUrl} onClick={handleClick} className={cardClasses}>
+      <Link href={product.productUrl as Route} onClick={handleClick} className={cardClasses}>
         {cardContent}
       </Link>
     );
