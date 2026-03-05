@@ -17,19 +17,13 @@ export function ToolCallUI({ toolPart, closeChat }: ToolCallUIProps) {
 
   // Check for completion
   const isComplete =
-    toolPart.state === "result" ||
-    toolPart.result !== undefined ||
-    toolPart.output !== undefined;
+    toolPart.state === "result" || toolPart.result !== undefined || toolPart.output !== undefined;
 
   const searchQuery =
-    toolName === "searchProducts" && toolPart.args?.query
-      ? String(toolPart.args.query)
-      : undefined;
+    toolName === "searchProducts" && toolPart.args?.query ? String(toolPart.args.query) : undefined;
 
   const orderStatus =
-    toolName === "getMyOrders" && toolPart.args?.status
-      ? String(toolPart.args.status)
-      : undefined;
+    toolName === "getMyOrders" && toolPart.args?.status ? String(toolPart.args.status) : undefined;
 
   // Get results based on tool type
   const result = toolPart.result || toolPart.output;
@@ -103,11 +97,7 @@ export function ToolCallUI({ toolPart, closeChat }: ToolCallUIProps) {
           </p>
           <div className="space-y-2">
             {productResult.products.map((product) => (
-              <ProductCardWidget
-                key={product.id}
-                product={product}
-                onClose={closeChat}
-              />
+              <ProductCardWidget key={product.id} product={product} onClose={closeChat} />
             ))}
           </div>
         </div>
@@ -122,11 +112,7 @@ export function ToolCallUI({ toolPart, closeChat }: ToolCallUIProps) {
           </p>
           <div className="space-y-2">
             {orderResult.orders.map((order) => (
-              <OrderCardWidget
-                key={order.id}
-                order={order}
-                onClose={closeChat}
-              />
+              <OrderCardWidget key={order.id} order={order} onClose={closeChat} />
             ))}
           </div>
         </div>

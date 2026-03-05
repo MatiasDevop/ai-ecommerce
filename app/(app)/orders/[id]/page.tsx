@@ -109,9 +109,7 @@ export default async function OrderDetailPage({ params }: OrderPageProps) {
                   {/* Price */}
                   <div className="text-right">
                     <p className="font-medium text-zinc-900 dark:text-zinc-100">
-                      {formatPrice(
-                        (item.priceAtPurchase ?? 0) * (item.quantity ?? 1),
-                      )}
+                      {formatPrice((item.priceAtPurchase ?? 0) * (item.quantity ?? 1))}
                     </p>
                     {(item.quantity ?? 1) > 1 && (
                       <p className="text-sm text-zinc-500">
@@ -129,23 +127,15 @@ export default async function OrderDetailPage({ params }: OrderPageProps) {
         <div className="space-y-6 lg:col-span-2">
           {/* Summary */}
           <div className="rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
-            <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">
-              Order Summary
-            </h2>
+            <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Order Summary</h2>
             <div className="mt-4 space-y-3">
               <div className="flex justify-between text-sm">
-                <span className="text-zinc-500 dark:text-zinc-400">
-                  Subtotal
-                </span>
-                <span className="text-zinc-900 dark:text-zinc-100">
-                  {formatPrice(order.total)}
-                </span>
+                <span className="text-zinc-500 dark:text-zinc-400">Subtotal</span>
+                <span className="text-zinc-900 dark:text-zinc-100">{formatPrice(order.total)}</span>
               </div>
               <div className="border-t border-zinc-200 pt-3 dark:border-zinc-800">
                 <div className="flex justify-between font-semibold">
-                  <span className="text-zinc-900 dark:text-zinc-100">
-                    Total
-                  </span>
+                  <span className="text-zinc-900 dark:text-zinc-100">Total</span>
                   <span className="text-zinc-900 dark:text-zinc-100">
                     {formatPrice(order.total)}
                   </span>
@@ -159,19 +149,13 @@ export default async function OrderDetailPage({ params }: OrderPageProps) {
             <div className="rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
               <div className="flex items-center gap-2">
                 <MapPin className="h-5 w-5 text-zinc-400" />
-                <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">
-                  Shipping Address
-                </h2>
+                <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Shipping Address</h2>
               </div>
               <div className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
                 {order.address.name && <p>{order.address.name}</p>}
                 {order.address.line1 && <p>{order.address.line1}</p>}
                 {order.address.line2 && <p>{order.address.line2}</p>}
-                <p>
-                  {[order.address.city, order.address.postcode]
-                    .filter(Boolean)
-                    .join(", ")}
-                </p>
+                <p>{[order.address.city, order.address.postcode].filter(Boolean).join(", ")}</p>
                 {order.address.country && <p>{order.address.country}</p>}
               </div>
             </div>
@@ -181,9 +165,7 @@ export default async function OrderDetailPage({ params }: OrderPageProps) {
           <div className="rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
             <div className="flex items-center gap-2">
               <CreditCard className="h-5 w-5 text-zinc-400" />
-              <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">
-                Payment
-              </h2>
+              <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Payment</h2>
             </div>
             <div className="mt-4 space-y-3">
               <div className="flex items-center justify-between">

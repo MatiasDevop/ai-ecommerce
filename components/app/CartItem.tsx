@@ -26,10 +26,7 @@ export function CartItem({ item, stockInfo }: CartItemProps) {
 
   return (
     <div
-      className={cn(
-        "flex gap-4 py-4",
-        hasIssue && "rounded-lg bg-red-50 p-3 dark:bg-red-950/30",
-      )}
+      className={cn("flex gap-4 py-4", hasIssue && "rounded-lg bg-red-50 p-3 dark:bg-red-950/30")}
     >
       {/* Image */}
       <div
@@ -39,13 +36,7 @@ export function CartItem({ item, stockInfo }: CartItemProps) {
         )}
       >
         {item.image ? (
-          <Image
-            src={item.image}
-            alt={item.name}
-            fill
-            className="object-cover"
-            sizes="80px"
-          />
+          <Image src={item.image} alt={item.name} fill className="object-cover" sizes="80px" />
         ) : (
           <div className="flex h-full items-center justify-center text-xs text-zinc-400">
             No image

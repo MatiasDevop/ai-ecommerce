@@ -46,15 +46,11 @@ export const createCartStore = (initState: CartState = defaultInitState) => {
 
         addItem: (item, quantity = 1) =>
           set((state) => {
-            const existing = state.items.find(
-              (i) => i.productId === item.productId,
-            );
+            const existing = state.items.find((i) => i.productId === item.productId);
             if (existing) {
               return {
                 items: state.items.map((i) =>
-                  i.productId === item.productId
-                    ? { ...i, quantity: i.quantity + quantity }
-                    : i,
+                  i.productId === item.productId ? { ...i, quantity: i.quantity + quantity } : i,
                 ),
               };
             }
@@ -74,9 +70,7 @@ export const createCartStore = (initState: CartState = defaultInitState) => {
               };
             }
             return {
-              items: state.items.map((i) =>
-                i.productId === productId ? { ...i, quantity } : i,
-              ),
+              items: state.items.map((i) => (i.productId === productId ? { ...i, quantity } : i)),
             };
           }),
 

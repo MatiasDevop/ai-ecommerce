@@ -32,8 +32,7 @@ export const createChatStore = (initState: ChatState = defaultInitState) => {
     ...initState,
 
     openChat: () => set({ isOpen: true }),
-    openChatWithMessage: (message: string) =>
-      set({ isOpen: true, pendingMessage: message }),
+    openChatWithMessage: (message: string) => set({ isOpen: true, pendingMessage: message }),
     closeChat: () => set({ isOpen: false }),
     toggleChat: () => set((state) => ({ isOpen: !state.isOpen })),
     clearPendingMessage: () => set({ pendingMessage: null }),

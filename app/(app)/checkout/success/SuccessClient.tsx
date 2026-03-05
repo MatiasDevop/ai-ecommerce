@@ -56,9 +56,7 @@ export function SuccessClient({ session }: SuccessClientProps) {
       {/* Order Details */}
       <div className="mt-10 rounded-lg border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
         <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
-          <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">
-            Order Details
-          </h2>
+          <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Order Details</h2>
         </div>
 
         <div className="px-6 py-4">
@@ -95,18 +93,12 @@ export function SuccessClient({ session }: SuccessClientProps) {
         {/* Shipping Address */}
         {address && (
           <div className="border-t border-zinc-200 px-6 py-4 dark:border-zinc-800">
-            <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
-              Shipping to
-            </h3>
+            <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-100">Shipping to</h3>
             <div className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
               {session.customerName && <p>{session.customerName}</p>}
               {address.line1 && <p>{address.line1}</p>}
               {address.line2 && <p>{address.line2}</p>}
-              <p>
-                {[address.city, address.state, address.postal_code]
-                  .filter(Boolean)
-                  .join(", ")}
-              </p>
+              <p>{[address.city, address.state, address.postal_code].filter(Boolean).join(", ")}</p>
               {address.country && <p>{address.country}</p>}
             </div>
           </div>
@@ -118,9 +110,7 @@ export function SuccessClient({ session }: SuccessClientProps) {
             <Package className="h-5 w-5 text-zinc-400" />
             <span className="text-sm text-zinc-600 dark:text-zinc-400">
               Payment status:{" "}
-              <span className="font-medium capitalize text-green-600">
-                {session.paymentStatus}
-              </span>
+              <span className="font-medium capitalize text-green-600">{session.paymentStatus}</span>
             </span>
           </div>
         </div>

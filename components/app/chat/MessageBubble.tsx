@@ -7,11 +7,7 @@ interface MessageBubbleProps {
   closeChat: () => void;
 }
 
-export function MessageBubble({
-  role,
-  content,
-  closeChat,
-}: MessageBubbleProps) {
+export function MessageBubble({ role, content, closeChat }: MessageBubbleProps) {
   const isUser = role === "user";
   console.log("MessageBubble content:...", content);
   return (
@@ -19,9 +15,7 @@ export function MessageBubble({
       {/* Avatar */}
       <div
         className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
-          isUser
-            ? "bg-zinc-900 dark:bg-zinc-100"
-            : "bg-amber-100 dark:bg-amber-900/30"
+          isUser ? "bg-zinc-900 dark:bg-zinc-100" : "bg-amber-100 dark:bg-amber-900/30"
         }`}
       >
         {isUser ? (
@@ -39,11 +33,7 @@ export function MessageBubble({
             : "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
         }`}
       >
-        <MessageContent
-          content={content}
-          closeChat={closeChat}
-          isUser={isUser}
-        />
+        <MessageContent content={content} closeChat={closeChat} isUser={isUser} />
       </div>
     </div>
   );

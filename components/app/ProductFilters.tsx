@@ -35,10 +35,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
   const currentInStock = searchParams.get("inStock") === "true";
 
   // Local state for price range (for smooth slider dragging)
-  const [priceRange, setPriceRange] = useState<[number, number]>([
-    urlMinPrice,
-    urlMaxPrice,
-  ]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([urlMinPrice, urlMaxPrice]);
 
   // Sync local state when URL changes
   useEffect(() => {
@@ -120,9 +117,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
     <div className="mb-2 flex items-center justify-between">
       <span
         className={`block text-sm font-medium ${
-          isActive
-            ? "text-zinc-900 dark:text-zinc-100"
-            : "text-zinc-700 dark:text-zinc-300"
+          isActive ? "text-zinc-900 dark:text-zinc-100" : "text-zinc-700 dark:text-zinc-300"
         }`}
       >
         {children}
@@ -152,8 +147,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
         <div className="rounded-lg border-2 border-amber-300 bg-amber-50 p-3 dark:border-amber-700 dark:bg-amber-950">
           <div className="mb-2 flex items-center justify-between">
             <span className="text-sm font-medium text-amber-800 dark:text-amber-200">
-              {activeFilterCount}{" "}
-              {activeFilterCount === 1 ? "filter" : "filters"} applied
+              {activeFilterCount} {activeFilterCount === 1 ? "filter" : "filters"} applied
             </span>
           </div>
           <Button
@@ -196,9 +190,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
         </FilterLabel>
         <Select
           value={currentCategory || "all"}
-          onValueChange={(value) =>
-            updateParams({ category: value === "all" ? null : value })
-          }
+          onValueChange={(value) => updateParams({ category: value === "all" ? null : value })}
         >
           <SelectTrigger
             className={
@@ -227,9 +219,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
         </FilterLabel>
         <Select
           value={currentColor || "all"}
-          onValueChange={(value) =>
-            updateParams({ color: value === "all" ? null : value })
-          }
+          onValueChange={(value) => updateParams({ color: value === "all" ? null : value })}
         >
           <SelectTrigger
             className={
@@ -258,9 +248,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
         </FilterLabel>
         <Select
           value={currentMaterial || "all"}
-          onValueChange={(value) =>
-            updateParams({ material: value === "all" ? null : value })
-          }
+          onValueChange={(value) => updateParams({ material: value === "all" ? null : value })}
         >
           <SelectTrigger
             className={
@@ -309,9 +297,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
           <input
             type="checkbox"
             checked={currentInStock}
-            onChange={(e) =>
-              updateParams({ inStock: e.target.checked ? "true" : null })
-            }
+            onChange={(e) => updateParams({ inStock: e.target.checked ? "true" : null })}
             className="h-5 w-5 rounded border-zinc-300 text-amber-500 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800"
           />
           <span
@@ -336,10 +322,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
         <span className="mb-2 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
           Sort By
         </span>
-        <Select
-          value={currentSort}
-          onValueChange={(value) => updateParams({ sort: value })}
-        >
+        <Select value={currentSort} onValueChange={(value) => updateParams({ sort: value })}>
           <SelectTrigger>
             <SelectValue />
           </SelectTrigger>

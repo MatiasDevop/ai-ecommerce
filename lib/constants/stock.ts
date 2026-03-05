@@ -9,8 +9,7 @@ export const LOW_STOCK_THRESHOLD = 5;
  * @param stock - Current stock count
  * @returns true if stock is above 0 but at or below the threshold
  */
-export const isLowStock = (stock: number): boolean =>
-  stock > 0 && stock <= LOW_STOCK_THRESHOLD;
+export const isLowStock = (stock: number): boolean => stock > 0 && stock <= LOW_STOCK_THRESHOLD;
 
 /**
  * Check if a product is out of stock

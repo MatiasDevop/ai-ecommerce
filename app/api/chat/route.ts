@@ -17,10 +17,7 @@ export async function POST(request: Request) {
       uiMessages: messages,
     });
   } catch (error) {
-    const message =
-      error instanceof Error
-        ? error.message
-        : "Failed to process chat request.";
+    const message = error instanceof Error ? error.message : "Failed to process chat request.";
 
     return Response.json({ error: message }, { status: 500 });
   }

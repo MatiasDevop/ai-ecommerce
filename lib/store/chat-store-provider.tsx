@@ -2,12 +2,7 @@
 
 import { createContext, type ReactNode, useContext, useRef } from "react";
 import { useStore } from "zustand";
-import {
-  type ChatState,
-  type ChatStore,
-  createChatStore,
-  defaultInitState,
-} from "./chat-store";
+import { type ChatState, type ChatStore, createChatStore, defaultInitState } from "./chat-store";
 
 // Store API type
 export type ChatStoreApi = ReturnType<typeof createChatStore>;
@@ -25,21 +20,14 @@ interface ChatStoreProviderProps {
  * Chat store provider - creates one store instance per provider
  * Wrap your app/(app) layout with this provider
  */
-export const ChatStoreProvider = ({
-  children,
-  initialState,
-}: ChatStoreProviderProps) => {
+export const ChatStoreProvider = ({ children, initialState }: ChatStoreProviderProps) => {
   const storeRef = useRef<ChatStoreApi | null>(null);
 
   if (storeRef.current === null) {
     storeRef.current = createChatStore(initialState ?? defaultInitState);
   }
 
-  return (
-    <ChatStoreContext.Provider value={storeRef.current}>
-      {children}
-    </ChatStoreContext.Provider>
-  );
+  return <ChatStoreContext.Provider value={storeRef.current}>{children}</ChatStoreContext.Provider>;
 };
 
 /**
@@ -68,8 +56,7 @@ export const useIsChatOpen = () => useChatStore((state) => state.isOpen);
 /**
  * Get pending message
  */
-export const usePendingMessage = () =>
-  useChatStore((state) => state.pendingMessage);
+export const usePendingMessage = () => useChatStore((state) => state.pendingMessage);
 
 /**
  * Get all chat actions
@@ -77,14 +64,10 @@ export const usePendingMessage = () =>
  */
 export const useChatActions = () => {
   const openChat = useChatStore((state) => state.openChat);
-  const openChatWithMessage = useChatStore(
-    (state) => state.openChatWithMessage,
-  );
+  const openChatWithMessage = useChatStore((state) => state.openChatWithMessage);
   const closeChat = useChatStore((state) => state.closeChat);
   const toggleChat = useChatStore((state) => state.toggleChat);
-  const clearPendingMessage = useChatStore(
-    (state) => state.clearPendingMessage,
-  );
+  const clearPendingMessage = useChatStore((state) => state.clearPendingMessage);
 
   return {
     openChat,

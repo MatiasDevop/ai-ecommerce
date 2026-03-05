@@ -1,19 +1,8 @@
 "use client";
 
-import {
-  createContext,
-  type ReactNode,
-  useContext,
-  useEffect,
-  useRef,
-} from "react";
+import { createContext, type ReactNode, useContext, useEffect, useRef } from "react";
 import { useStore } from "zustand";
-import {
-  type CartState,
-  type CartStore,
-  createCartStore,
-  defaultInitState,
-} from "./cart-store";
+import { type CartState, type CartStore, createCartStore, defaultInitState } from "./cart-store";
 
 // Store API type
 export type CartStoreApi = ReturnType<typeof createCartStore>;
@@ -33,10 +22,7 @@ interface CartStoreProviderProps {
  * Wrap your app/(app) layout with this provider
  * @see https://zustand.docs.pmnd.rs/guides/nextjs#hydration-and-asynchronous-storages
  */
-export const CartStoreProvider = ({
-  children,
-  initialState,
-}: CartStoreProviderProps) => {
+export const CartStoreProvider = ({ children, initialState }: CartStoreProviderProps) => {
   const storeRef = useRef<CartStoreApi | null>(null);
 
   if (storeRef.current === null) {
@@ -49,11 +35,7 @@ export const CartStoreProvider = ({
     storeRef.current?.persist.rehydrate();
   }, []);
 
-  return (
-    <CartStoreContext.Provider value={storeRef.current}>
-      {children}
-    </CartStoreContext.Provider>
-  );
+  return <CartStoreContext.Provider value={storeRef.current}>{children}</CartStoreContext.Provider>;
 };
 
 /**
@@ -89,25 +71,19 @@ export const useCartIsOpen = () => useCartStore((state) => state.isOpen);
  * Get total number of items in cart
  */
 export const useTotalItems = () =>
-  useCartStore((state) =>
-    state.items.reduce((sum, item) => sum + item.quantity, 0),
-  );
+  useCartStore((state) => state.items.reduce((sum, item) => sum + item.quantity, 0));
 
 /**
  * Get total price of cart
  */
 export const useTotalPrice = () =>
-  useCartStore((state) =>
-    state.items.reduce((sum, item) => sum + item.price * item.quantity, 0),
-  );
+  useCartStore((state) => state.items.reduce((sum, item) => sum + item.price * item.quantity, 0));
 
 /**
  * Find a specific item in cart
  */
 export const useCartItem = (productId: string) =>
-  useCartStore((state) =>
-    state.items.find((item) => item.productId === productId),
-  );
+  useCartStore((state) => state.items.find((item) => item.productId === productId));
 
 /**
  * Get all cart actions

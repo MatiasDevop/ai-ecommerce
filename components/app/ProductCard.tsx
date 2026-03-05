@@ -17,16 +17,12 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const [hoveredImageIndex, setHoveredImageIndex] = useState<number | null>(
-    null,
-  );
+  const [hoveredImageIndex, setHoveredImageIndex] = useState<number | null>(null);
 
   const images = product.images ?? [];
   const mainImageUrl = images[0]?.asset?.url;
   const displayedImageUrl =
-    hoveredImageIndex !== null
-      ? images[hoveredImageIndex]?.asset?.url
-      : mainImageUrl;
+    hoveredImageIndex !== null ? images[hoveredImageIndex]?.asset?.url : mainImageUrl;
 
   const stock = product.stock ?? 0;
   const isOutOfStock = stock <= 0;

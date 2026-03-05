@@ -6,11 +6,7 @@ import { Loader2, Send, Sparkles, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  useChatActions,
-  useIsChatOpen,
-  usePendingMessage,
-} from "@/lib/store/chat-store-provider";
+import { useChatActions, useIsChatOpen, usePendingMessage } from "@/lib/store/chat-store-provider";
 
 import {
   getMessageText,
@@ -105,10 +101,7 @@ export function ChatSheet() {
         {/* Messages */}
         <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
           {messages.length === 0 ? (
-            <WelcomeScreen
-              onSuggestionClick={sendMessage}
-              isSignedIn={isSignedIn ?? false}
-            />
+            <WelcomeScreen onSuggestionClick={sendMessage} isSignedIn={isSignedIn ?? false} />
           ) : (
             <div className="space-y-4">
               {messages.map((message) => {
@@ -133,11 +126,7 @@ export function ChatSheet() {
 
                     {/* Message content */}
                     {hasContent && (
-                      <MessageBubble
-                        role={message.role}
-                        content={content}
-                        closeChat={closeChat}
-                      />
+                      <MessageBubble role={message.role} content={content} closeChat={closeChat} />
                     )}
                   </div>
                 );
@@ -162,11 +151,7 @@ export function ChatSheet() {
               disabled={isLoading}
               className="flex-1"
             />
-            <Button
-              type="submit"
-              size="icon"
-              disabled={!input.trim() || isLoading}
-            >
+            <Button type="submit" size="icon" disabled={!input.trim() || isLoading}>
               {isLoading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (

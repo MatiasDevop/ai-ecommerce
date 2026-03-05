@@ -33,9 +33,7 @@ interface CheckoutResult {
  * Creates a Stripe Checkout Session from cart items
  * Validates stock and prices against Sanity before creating session
  */
-export async function createCheckoutSession(
-  items: CartItem[],
-): Promise<CheckoutResult> {
+export async function createCheckoutSession(items: CartItem[]): Promise<CheckoutResult> {
   try {
     // 1. Verify user is authenticated
     const { userId } = await auth();
@@ -64,9 +62,7 @@ export async function createCheckoutSession(
     }[] = [];
 
     for (const item of items) {
-      const product = products.find(
-        (p: { _id: string }) => p._id === item.productId,
-      );
+      const product = products.find((p: { _id: string }) => p._id === item.productId);
 
       if (!product) {
         validationErrors.push(`Product "${item.name}" is no longer available`);
@@ -79,9 +75,7 @@ export async function createCheckoutSession(
       }
 
       if (item.quantity > (product.stock ?? 0)) {
-        validationErrors.push(
-          `Only ${product.stock} of "${product.name}" available`,
-        );
+        validationErrors.push(`Only ${product.stock} of "${product.name}" available`);
         continue;
       }
 
@@ -93,8 +87,8 @@ export async function createCheckoutSession(
     }
 
     // 5. Create Stripe line items with validated prices
-    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] =
-      validatedItems.map(({ product, quantity }) => ({
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = validatedItems.map(
+      ({ product, quantity }) => ({
         price_data: {
           currency: "gbp",
           product_data: {
@@ -107,15 +101,18 @@ export async function createCheckoutSession(
           unit_amount: Math.round((product.price ?? 0) * 100), // Convert to pence
         },
         quantity,
-      }));
+      }),
+    );
 
     // 6. Get or create Stripe customer
     const userEmail = user.emailAddresses[0]?.emailAddress ?? "";
-    const userName =
-      `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim() || userEmail;
+    const userName = `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim() || userEmail;
 
-    const { stripeCustomerId, sanityCustomerId } =
-      await getOrCreateStripeCustomer(userEmail, userName, userId);
+    const { stripeCustomerId, sanityCustomerId } = await getOrCreateStripeCustomer(
+      userEmail,
+      userName,
+      userId,
+    );
 
     // 7. Prepare metadata for webhook
     const metadata = {

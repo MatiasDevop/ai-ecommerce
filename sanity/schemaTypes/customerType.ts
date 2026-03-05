@@ -35,9 +35,7 @@ export const customerType = defineType({
       group: "stripe",
       readOnly: true,
       description: "Stripe customer ID for payments",
-      validation: (rule) => [
-        rule.required().error("Stripe customer ID is required"),
-      ],
+      validation: (rule) => [rule.required().error("Stripe customer ID is required")],
     }),
     defineField({
       name: "createdAt",
@@ -56,9 +54,7 @@ export const customerType = defineType({
     prepare({ email, name, stripeCustomerId }) {
       return {
         title: name ?? email ?? "Unknown Customer",
-        subtitle: stripeCustomerId
-          ? `${email ?? ""} • ${stripeCustomerId}`
-          : (email ?? ""),
+        subtitle: stripeCustomerId ? `${email ?? ""} • ${stripeCustomerId}` : (email ?? ""),
       };
     },
   },

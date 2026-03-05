@@ -5,9 +5,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import type { PRODUCT_BY_SLUG_QUERYResult } from "@/sanity.types";
 
-type ProductImages = NonNullable<
-  NonNullable<PRODUCT_BY_SLUG_QUERYResult>["images"]
->;
+type ProductImages = NonNullable<NonNullable<PRODUCT_BY_SLUG_QUERYResult>["images"]>;
 
 interface ProductGalleryProps {
   images: ProductImages | null;
@@ -41,9 +39,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             priority
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-zinc-400">
-            No image
-          </div>
+          <div className="flex h-full items-center justify-center text-zinc-400">No image</div>
         )}
       </div>
 

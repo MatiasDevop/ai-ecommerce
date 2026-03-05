@@ -12,7 +12,15 @@
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
-    "indentWidth": 2
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all"
+    }
   },
   "linter": {
     "enabled": true,
@@ -21,6 +29,13 @@
       "suspicious": {
         "noUnknownAtRules": "off",
         "noArrayIndexKey": "off"
+      },
+      "a11y": {
+        "useButtonType": "warn",
+        "useAltText": "error"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "warn"
       }
     },
     "domains": {

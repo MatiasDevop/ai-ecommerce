@@ -56,11 +56,7 @@ export function CheckoutButton({ disabled }: CheckoutButtonProps) {
           </>
         )}
       </Button>
-      {error && (
-        <p className="text-sm text-red-600 dark:text-red-400 text-center">
-          {error}
-        </p>
-      )}
+      {error && <p className="text-sm text-red-600 dark:text-red-400 text-center">{error}</p>}
     </div>
   );
 }

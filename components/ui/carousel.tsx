@@ -1,8 +1,6 @@
 "use client";
 
-import useEmblaCarousel, {
-  type UseEmblaCarouselType,
-} from "embla-carousel-react";
+import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
@@ -107,26 +105,25 @@ function Carousel({
     <CarouselContext.Provider
       value={{
         carouselRef,
-        api: api,
+        api,
         opts,
-        orientation:
-          orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
+        orientation,
         scrollPrev,
         scrollNext,
         canScrollPrev,
         canScrollNext,
       }}
     >
-      <div
+      <section
         onKeyDownCapture={handleKeyDown}
         className={cn("relative", className)}
-        role="region"
         aria-roledescription="carousel"
+        aria-label="Carousel"
         data-slot="carousel"
         {...props}
       >
         {children}
-      </div>
+      </section>
     </CarouselContext.Provider>
   );
 }
@@ -135,17 +132,9 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   const { carouselRef, orientation } = useCarousel();
 
   return (
-    <div
-      ref={carouselRef}
-      className="overflow-hidden"
-      data-slot="carousel-content"
-    >
+    <div ref={carouselRef} className="overflow-hidden" data-slot="carousel-content">
       <div
-        className={cn(
-          "flex",
-          orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
-          className,
-        )}
+        className={cn("flex", orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col", className)}
         {...props}
       />
     </div>
@@ -156,6 +145,7 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
   const { orientation } = useCarousel();
 
   return (
+    // biome-ignore lint/a11y/useSemanticElements: role="group" is standard for carousel slides
     <div
       role="group"
       aria-roledescription="slide"
@@ -192,9 +182,10 @@ function CarouselPrevious({
       )}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
+      aria-label="Previous slide"
       {...props}
     >
-      <ArrowLeft />
+      <ArrowLeft className="size-4" />
       <span className="sr-only">Previous slide</span>
     </Button>
   );
@@ -222,9 +213,10 @@ function CarouselNext({
       )}
       disabled={!canScrollNext}
       onClick={scrollNext}
+      aria-label="Next slide"
       {...props}
     >
-      <ArrowRight />
+      <ArrowRight className="size-4" />
       <span className="sr-only">Next slide</span>
     </Button>
   );

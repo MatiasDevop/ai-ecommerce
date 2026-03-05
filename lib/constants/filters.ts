@@ -50,13 +50,7 @@ export const MATERIALS_SANITY_LIST = MATERIALS.map(({ value, label }) => ({
 }));
 
 /** Color values array for zod enums or validation */
-export const COLOR_VALUES = COLORS.map((c) => c.value) as [
-  ColorValue,
-  ...ColorValue[],
-];
+export const COLOR_VALUES = COLORS.map((c) => c.value) as [ColorValue, ...ColorValue[]];
 
 /** Material values array for zod enums or validation */
-export const MATERIAL_VALUES = MATERIALS.map((m) => m.value) as [
-  MaterialValue,
-  ...MaterialValue[],
-];
+export const MATERIAL_VALUES = MATERIALS.map((m) => m.value) as [MaterialValue, ...MaterialValue[]];

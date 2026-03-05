@@ -46,11 +46,7 @@ export function AddToCartButton({
   // Out of stock
   if (isOutOfStock) {
     return (
-      <Button
-        disabled
-        variant="secondary"
-        className={cn("h-11 w-full", className)}
-      >
+      <Button disabled variant="secondary" className={cn("h-11 w-full", className)}>
         Out of Stock
       </Button>
     );

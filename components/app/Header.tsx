@@ -47,12 +47,7 @@ export function Header() {
           )}
 
           {/* Cart Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="relative"
-            onClick={openCart}
-          >
+          <Button variant="ghost" size="icon" className="relative" onClick={openCart}>
             <ShoppingBag className="h-5 w-5" />
             {totalItems > 0 && (
               <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-zinc-900 text-xs font-medium text-white dark:bg-zinc-100 dark:text-zinc-900">

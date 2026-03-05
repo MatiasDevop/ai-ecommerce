@@ -190,13 +190,10 @@ export function createShoppingAgent({ userId }: ShoppingAgentOptions) {
   const openRouterApiKey = process.env.OPENROUTER_API_KEY;
 
   if (!openRouterApiKey) {
-    throw new Error(
-      "Missing OPENROUTER_API_KEY. Add it to your environment to enable AI chat.",
-    );
+    throw new Error("Missing OPENROUTER_API_KEY. Add it to your environment to enable AI chat.");
   }
 
-  const openRouterModel =
-    process.env.OPENROUTER_MODEL?.trim() || DEFAULT_OPENROUTER_MODEL;
+  const openRouterModel = process.env.OPENROUTER_MODEL?.trim() || DEFAULT_OPENROUTER_MODEL;
 
   const openRouter = createOpenAI({
     apiKey: openRouterApiKey,

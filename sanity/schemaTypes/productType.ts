@@ -1,9 +1,6 @@
 import { PackageIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import {
-  COLORS_SANITY_LIST,
-  MATERIALS_SANITY_LIST,
-} from "@/lib/constants/filters";
+import { COLORS_SANITY_LIST, MATERIALS_SANITY_LIST } from "@/lib/constants/filters";
 
 export const productType = defineType({
   name: "product",
@@ -30,9 +27,7 @@ export const productType = defineType({
         source: "name",
         maxLength: 96,
       },
-      validation: (rule) => [
-        rule.required().error("Slug is required for URL generation"),
-      ],
+      validation: (rule) => [rule.required().error("Slug is required for URL generation")],
     }),
     defineField({
       name: "description",
@@ -94,9 +89,7 @@ export const productType = defineType({
           },
         },
       ],
-      validation: (rule) => [
-        rule.min(1).error("At least one image is required"),
-      ],
+      validation: (rule) => [rule.min(1).error("At least one image is required")],
     }),
     defineField({
       name: "stock",
@@ -134,7 +127,7 @@ export const productType = defineType({
     prepare({ title, subtitle, media, price }) {
       return {
         title,
-        subtitle: `${subtitle ? subtitle + " • " : ""}£${price ?? 0}`,
+        subtitle: `${subtitle ? `${subtitle} • ` : ""}£${price ?? 0}`,
         media,
       };
     },

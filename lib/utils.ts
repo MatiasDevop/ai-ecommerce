@@ -11,19 +11,13 @@ export function cn(...inputs: ClassValue[]) {
  * @param currency - Currency symbol (default: "£")
  * @returns Formatted price string (e.g., "£599.99")
  */
-export function formatPrice(
-  amount: number | null | undefined,
-  currency = "£",
-): string {
+export function formatPrice(amount: number | null | undefined, currency = "£"): string {
   return `${currency}${(amount ?? 0).toFixed(2)}`;
 }
 
 type DateFormatOption = "short" | "long" | "datetime";
 
-const DATE_FORMAT_OPTIONS: Record<
-  DateFormatOption,
-  Intl.DateTimeFormatOptions
-> = {
+const DATE_FORMAT_OPTIONS: Record<DateFormatOption, Intl.DateTimeFormatOptions> = {
   short: { day: "numeric", month: "short" },
   long: { day: "numeric", month: "long", year: "numeric" },
   datetime: {
@@ -48,10 +42,7 @@ export function formatDate(
   fallback = "Date unknown",
 ): string {
   if (!date) return fallback;
-  return new Date(date).toLocaleDateString(
-    "en-GB",
-    DATE_FORMAT_OPTIONS[format],
-  );
+  return new Date(date).toLocaleDateString("en-GB", DATE_FORMAT_OPTIONS[format]);
 }
 
 /**
@@ -59,9 +50,7 @@ export function formatDate(
  * @param orderNumber - Full order number (e.g., "ORD-2024-ABC123")
  * @returns Shortened order number (e.g., "ABC123") or "N/A" if null
  */
-export function formatOrderNumber(
-  orderNumber: string | null | undefined,
-): string {
+export function formatOrderNumber(orderNumber: string | null | undefined): string {
   if (!orderNumber) return "N/A";
   return orderNumber.split("-").pop() ?? orderNumber;
 }

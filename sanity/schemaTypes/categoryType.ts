@@ -10,9 +10,7 @@ export const categoryType = defineType({
     defineField({
       name: "title",
       type: "string",
-      validation: (rule) => [
-        rule.required().error("Category title is required"),
-      ],
+      validation: (rule) => [rule.required().error("Category title is required")],
     }),
     defineField({
       name: "slug",
@@ -21,9 +19,7 @@ export const categoryType = defineType({
         source: "title",
         maxLength: 96,
       },
-      validation: (rule) => [
-        rule.required().error("Slug is required for URL generation"),
-      ],
+      validation: (rule) => [rule.required().error("Slug is required for URL generation")],
     }),
     defineField({
       name: "image",

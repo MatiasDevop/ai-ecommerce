@@ -16,11 +16,7 @@ interface ProductSectionProps {
   searchQuery: string;
 }
 
-export function ProductSection({
-  categories,
-  products,
-  searchQuery,
-}: ProductSectionProps) {
+export function ProductSection({ categories, products, searchQuery }: ProductSectionProps) {
   const [filtersOpen, setFiltersOpen] = useState(true);
 
   return (
@@ -28,8 +24,7 @@ export function ProductSection({
       {/* Header with results count and filter toggle */}
       <div className="flex items-center justify-between gap-4">
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
-          {products.length} {products.length === 1 ? "product" : "products"}{" "}
-          found
+          {products.length} {products.length === 1 ? "product" : "products"} found
           {searchQuery && (
             <span>
               {" "}

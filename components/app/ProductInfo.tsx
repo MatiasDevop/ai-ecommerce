@@ -25,9 +25,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
       )}
 
       {/* Title */}
-      <h1 className="mt-2 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
-        {product.name}
-      </h1>
+      <h1 className="mt-2 text-3xl font-bold text-zinc-900 dark:text-zinc-100">{product.name}</h1>
 
       {/* Price */}
       <p className="mt-4 text-2xl font-semibold text-zinc-900 dark:text-zinc-100">
@@ -36,9 +34,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
 
       {/* Description */}
       {product.description && (
-        <p className="mt-4 text-zinc-600 dark:text-zinc-400">
-          {product.description}
-        </p>
+        <p className="mt-4 text-zinc-600 dark:text-zinc-400">{product.description}</p>
       )}
 
       {/* Stock & Add to Cart */}

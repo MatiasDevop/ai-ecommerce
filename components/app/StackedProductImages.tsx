@@ -51,15 +51,11 @@ export function StackedProductImages({
   const displayImages = images.slice(0, 3);
   const extraCount = (totalCount ?? images.length) - displayImages.length;
 
-  const hoverClass = hoverScale
-    ? "transition-transform duration-200 group-hover:scale-105"
-    : "";
+  const hoverClass = hoverScale ? "transition-transform duration-200 group-hover:scale-105" : "";
 
   if (displayImages.length === 0) {
     return (
-      <div
-        className={`relative flex items-center justify-center ${config.container}`}
-      >
+      <div className={`relative flex items-center justify-center ${config.container}`}>
         <div
           className={`flex h-full w-full items-center justify-center rounded-lg bg-zinc-100 dark:bg-zinc-700 ${hoverClass}`}
         >
@@ -70,31 +66,21 @@ export function StackedProductImages({
   }
 
   return (
-    <div
-      className={`relative flex items-center justify-center ${config.container}`}
-    >
+    <div className={`relative flex items-center justify-center ${config.container}`}>
       <div className="relative h-full w-full">
         {displayImages.map((imageUrl, idx) => (
           <div
             key={imageUrl}
             className={`absolute overflow-hidden rounded-lg border-2 border-white bg-zinc-100 shadow-sm dark:border-zinc-800 dark:bg-zinc-700 ${hoverClass}`}
             style={{
-              width:
-                displayImages.length === 1 ? config.single : config.stacked,
-              height:
-                displayImages.length === 1 ? config.single : config.stacked,
+              width: displayImages.length === 1 ? config.single : config.stacked,
+              height: displayImages.length === 1 ? config.single : config.stacked,
               top: displayImages.length === 1 ? 0 : `${idx * config.offset}px`,
               left: displayImages.length === 1 ? 0 : `${idx * config.offset}px`,
               zIndex: displayImages.length - idx,
             }}
           >
-            <Image
-              src={imageUrl}
-              alt=""
-              fill
-              className="object-cover"
-              sizes={config.imageSizes}
-            />
+            <Image src={imageUrl} alt="" fill className="object-cover" sizes={config.imageSizes} />
           </div>
         ))}
         {extraCount > 0 && displayImages.length > 1 && (

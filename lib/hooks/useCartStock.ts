@@ -31,10 +31,7 @@ export function useCartStock(items: CartItem[]): UseCartStockReturn {
   const [isLoading, setIsLoading] = useState(false);
 
   // Memoize product IDs to use as stable dependency
-  const productIds = useMemo(
-    () => items.map((item) => item.productId),
-    [items],
-  );
+  const productIds = useMemo(() => items.map((item) => item.productId), [items]);
 
   const fetchStock = useCallback(async () => {
     if (items.length === 0) {
@@ -52,9 +49,7 @@ export function useCartStock(items: CartItem[]): UseCartStockReturn {
       const newStockMap = new Map<string, StockInfo>();
 
       for (const item of items) {
-        const product = products.find(
-          (p: { _id: string }) => p._id === item.productId,
-        );
+        const product = products.find((p: { _id: string }) => p._id === item.productId);
         const currentStock = product?.stock ?? 0;
 
         newStockMap.set(item.productId, {

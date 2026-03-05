@@ -24,10 +24,7 @@ export async function POST(req: Request) {
   const signature = headersList.get("stripe-signature");
 
   if (!signature) {
-    return NextResponse.json(
-      { error: "Missing stripe-signature header" },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: "Missing stripe-signature header" }, { status: 400 });
   }
 
   let event: Stripe.Event;
@@ -37,10 +34,7 @@ export async function POST(req: Request) {
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
     console.error("Webhook signature verification failed:", message);
-    return NextResponse.json(
-      { error: `Webhook Error: ${message}` },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: `Webhook Error: ${message}` }, { status: 400 });
   }
 
   // Handle the event
@@ -67,9 +61,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     });
 
     if (existingOrder) {
-      console.log(
-        `Webhook already processed for payment ${stripePaymentId}, skipping`,
-      );
+      console.log(`Webhook already processed for payment ${stripePaymentId}, skipping`);
       return;
     }
 
@@ -147,8 +139,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     // Decrease stock for all products in a single transaction
     await productIds
       .reduce(
-        (tx, productId, i) =>
-          tx.patch(productId, (p) => p.dec({ stock: quantities[i] })),
+        (tx, productId, i) => tx.patch(productId, (p) => p.dec({ stock: quantities[i] })),
         writeClient.transaction(),
       )
       .commit();

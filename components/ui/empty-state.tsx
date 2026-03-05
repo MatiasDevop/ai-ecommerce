@@ -66,11 +66,7 @@ export function EmptyState({
         </a>
       </Button>
     ) : (
-      <Button
-        onClick={action.onClick}
-        disabled={action.disabled}
-        className="mt-4"
-      >
+      <Button onClick={action.onClick} disabled={action.disabled} className="mt-4">
         {action.icon && <action.icon className="mr-2 h-4 w-4" />}
         {action.label}
       </Button>
@@ -93,21 +89,11 @@ export function EmptyState({
       >
         <Icon className={cn("text-zinc-400", config.icon)} />
       </div>
-      <h2
-        className={cn(
-          "font-semibold text-zinc-900 dark:text-zinc-100",
-          config.title,
-        )}
-      >
+      <h2 className={cn("font-semibold text-zinc-900 dark:text-zinc-100", config.title)}>
         {title}
       </h2>
       {description && (
-        <p
-          className={cn(
-            "max-w-sm text-zinc-500 dark:text-zinc-400",
-            config.description,
-          )}
-        >
+        <p className={cn("max-w-sm text-zinc-500 dark:text-zinc-400", config.description)}>
           {description}
         </p>
       )}

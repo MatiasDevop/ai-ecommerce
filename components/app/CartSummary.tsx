@@ -2,11 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  useCartActions,
-  useTotalItems,
-  useTotalPrice,
-} from "@/lib/store/cart-store-provider";
+import { useCartActions, useTotalItems, useTotalPrice } from "@/lib/store/cart-store-provider";
 import { formatPrice } from "@/lib/utils";
 
 interface CartSummaryProps {

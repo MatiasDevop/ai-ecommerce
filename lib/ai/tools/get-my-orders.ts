@@ -1,9 +1,6 @@
 import { tool } from "ai";
 import { z } from "zod";
-import {
-  getOrderStatusEmoji,
-  ORDER_STATUS_VALUES,
-} from "@/lib/constants/orderStatus";
+import { getOrderStatusEmoji, ORDER_STATUS_VALUES } from "@/lib/constants/orderStatus";
 import { formatPrice } from "@/lib/utils";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ORDERS_BY_USER_QUERY } from "@/sanity/queries/orders";
@@ -68,9 +65,7 @@ export function createGetMyOrdersTool(userId: string | null) {
         // Filter by status if provided
         let filteredOrders = orders as ORDERS_BY_USER_QUERYResult;
         if (status) {
-          filteredOrders = filteredOrders.filter(
-            (order) => order.status === status,
-          );
+          filteredOrders = filteredOrders.filter((order) => order.status === status);
         }
 
         if (filteredOrders.length === 0) {
@@ -93,12 +88,8 @@ export function createGetMyOrdersTool(userId: string | null) {
           status: order.status,
           statusDisplay: getOrderStatusEmoji(order.status),
           itemCount: order.itemCount ?? 0,
-          itemNames: (order.itemNames ?? []).filter(
-            (name): name is string => name !== null,
-          ),
-          itemImages: (order.itemImages ?? []).filter(
-            (url): url is string => url !== null,
-          ),
+          itemNames: (order.itemNames ?? []).filter((name): name is string => name !== null),
+          itemImages: (order.itemImages ?? []).filter((url): url is string => url !== null),
           createdAt: order.createdAt,
           orderUrl: `/orders/${order._id}`,
         }));

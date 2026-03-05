@@ -20,9 +20,7 @@ const productSearchSchema = z.object({
     .string()
     .optional()
     .default("")
-    .describe(
-      "Filter by category slug (e.g., 'sofas', 'tables', 'chairs', 'storage')",
-    ),
+    .describe("Filter by category slug (e.g., 'sofas', 'tables', 'chairs', 'storage')"),
   material: z
     .enum(["", ...MATERIAL_VALUES])
     .optional()
@@ -33,11 +31,7 @@ const productSearchSchema = z.object({
     .optional()
     .default("")
     .describe("Filter by color"),
-  minPrice: z
-    .number()
-    .optional()
-    .default(0)
-    .describe("Minimum price in GBP (e.g., 100)"),
+  minPrice: z.number().optional().default(0).describe("Minimum price in GBP (e.g., 100)"),
   maxPrice: z
     .number()
     .optional()
@@ -92,28 +86,28 @@ export const searchProductsTool = tool({
       }
 
       // Format the results with stock status for the AI to communicate
-      const formattedProducts: SearchProduct[] = (
-        products as AI_SEARCH_PRODUCTS_QUERYResult
-      ).map((product) => ({
-        id: product._id,
-        name: product.name ?? null,
-        slug: product.slug ?? null,
-        description: product.description ?? null,
-        price: product.price ?? null,
-        priceFormatted: product.price ? formatPrice(product.price) : null,
-        category: product.category?.title ?? null,
-        categorySlug: product.category?.slug ?? null,
-        material: product.material ?? null,
-        color: product.color ?? null,
-        dimensions: product.dimensions ?? null,
-        stockCount: product.stock ?? 0,
-        stockStatus: getStockStatus(product.stock),
-        stockMessage: getStockMessage(product.stock),
-        featured: product.featured ?? false,
-        assemblyRequired: product.assemblyRequired ?? false,
-        imageUrl: product.image?.asset?.url ?? null,
-        productUrl: product.slug ? `/products/${product.slug}` : null,
-      }));
+      const formattedProducts: SearchProduct[] = (products as AI_SEARCH_PRODUCTS_QUERYResult).map(
+        (product) => ({
+          id: product._id,
+          name: product.name ?? null,
+          slug: product.slug ?? null,
+          description: product.description ?? null,
+          price: product.price ?? null,
+          priceFormatted: product.price ? formatPrice(product.price) : null,
+          category: product.category?.title ?? null,
+          categorySlug: product.category?.slug ?? null,
+          material: product.material ?? null,
+          color: product.color ?? null,
+          dimensions: product.dimensions ?? null,
+          stockCount: product.stock ?? 0,
+          stockStatus: getStockStatus(product.stock),
+          stockMessage: getStockMessage(product.stock),
+          featured: product.featured ?? false,
+          assemblyRequired: product.assemblyRequired ?? false,
+          imageUrl: product.image?.asset?.url ?? null,
+          productUrl: product.slug ? `/products/${product.slug}` : null,
+        }),
+      );
 
       return {
         found: true,

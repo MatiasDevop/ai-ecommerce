@@ -8,10 +8,7 @@ interface ProductCardWidgetProps {
   onClose: () => void;
 }
 
-export function ProductCardWidget({
-  product,
-  onClose,
-}: ProductCardWidgetProps) {
+export function ProductCardWidget({ product, onClose }: ProductCardWidgetProps) {
   const isOutOfStock = product.stockStatus === "out_of_stock";
   const isLowStock = product.stockStatus === "low_stock";
 
@@ -44,9 +41,7 @@ export function ProductCardWidget({
               {product.name}
             </span>
             {product.category && (
-              <span className="text-xs text-zinc-500 dark:text-zinc-400">
-                {product.category}
-              </span>
+              <span className="text-xs text-zinc-500 dark:text-zinc-400">{product.category}</span>
             )}
           </div>
           {product.priceFormatted && (
@@ -58,9 +53,7 @@ export function ProductCardWidget({
         {(isOutOfStock || isLowStock) && (
           <span
             className={`mt-1 inline-block text-xs font-medium ${
-              isOutOfStock
-                ? "text-red-600 dark:text-red-400"
-                : "text-amber-600 dark:text-amber-400"
+              isOutOfStock ? "text-red-600 dark:text-red-400" : "text-amber-600 dark:text-amber-400"
             }`}
           >
             {isOutOfStock ? "Out of stock" : "Low stock"}
@@ -75,11 +68,7 @@ export function ProductCardWidget({
 
   if (product.productUrl) {
     return (
-      <Link
-        href={product.productUrl}
-        onClick={handleClick}
-        className={cardClasses}
-      >
+      <Link href={product.productUrl} onClick={handleClick} className={cardClasses}>
         {cardContent}
       </Link>
     );

@@ -10,10 +10,7 @@ interface CategoryTilesProps {
   activeCategory?: string;
 }
 
-export function CategoryTiles({
-  categories,
-  activeCategory,
-}: CategoryTilesProps) {
+export function CategoryTiles({ categories, activeCategory }: CategoryTilesProps) {
   return (
     <div className="relative">
       {/* Horizontal scrolling container - full width with edge padding */}

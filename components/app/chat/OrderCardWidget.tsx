@@ -21,9 +21,7 @@ export function OrderCardWidget({ order, onClose }: OrderCardWidgetProps) {
   };
 
   // Format date
-  const formattedDate = order.createdAt
-    ? formatDate(order.createdAt, "long")
-    : null;
+  const formattedDate = order.createdAt ? formatDate(order.createdAt, "long") : null;
 
   // Truncate item names for display
   const displayItems =
@@ -33,11 +31,7 @@ export function OrderCardWidget({ order, onClose }: OrderCardWidgetProps) {
 
   const cardContent = (
     <>
-      <StackedProductImages
-        images={order.itemImages}
-        totalCount={order.itemCount}
-        size="sm"
-      />
+      <StackedProductImages images={order.itemImages} totalCount={order.itemCount} size="sm" />
 
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-2">
@@ -66,9 +60,7 @@ export function OrderCardWidget({ order, onClose }: OrderCardWidgetProps) {
           {formattedDate && (
             <>
               <span className="text-zinc-300 dark:text-zinc-600">•</span>
-              <span className="text-xs text-zinc-500 dark:text-zinc-400">
-                {formattedDate}
-              </span>
+              <span className="text-xs text-zinc-500 dark:text-zinc-400">{formattedDate}</span>
             </>
           )}
         </div>
@@ -80,11 +72,7 @@ export function OrderCardWidget({ order, onClose }: OrderCardWidgetProps) {
     "group flex items-center gap-3 rounded-lg border border-zinc-200 bg-white p-3 transition-all duration-200 hover:border-amber-300 hover:shadow-md hover:shadow-amber-100/50 dark:border-zinc-700 dark:bg-zinc-800/50 dark:hover:border-amber-600/50 dark:hover:shadow-amber-900/20";
 
   return (
-    <Link
-      href={order.orderUrl as Route}
-      onClick={handleClick}
-      className={cardClasses}
-    >
+    <Link href={order.orderUrl as Route} onClick={handleClick} className={cardClasses}>
       {cardContent}
     </Link>
   );

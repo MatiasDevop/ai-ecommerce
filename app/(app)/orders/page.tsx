@@ -39,21 +39,15 @@ export default async function OrdersPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">
-          Your Orders
-        </h1>
-        <p className="mt-2 text-zinc-500 dark:text-zinc-400">
-          Track and manage your orders
-        </p>
+        <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">Your Orders</h1>
+        <p className="mt-2 text-zinc-500 dark:text-zinc-400">Track and manage your orders</p>
       </div>
 
       <div className="space-y-4">
         {orders.map((order) => {
           const status = getOrderStatus(order.status);
           const StatusIcon = status.icon;
-          const images = (order.itemImages ?? []).filter(
-            (url): url is string => url !== null,
-          );
+          const images = (order.itemImages ?? []).filter((url): url is string => url !== null);
 
           return (
             <Link
@@ -63,11 +57,7 @@ export default async function OrdersPage() {
             >
               <div className="flex gap-5 p-5">
                 {/* Left: Product Images Stack */}
-                <StackedProductImages
-                  images={images}
-                  totalCount={order.itemCount ?? 0}
-                  size="lg"
-                />
+                <StackedProductImages images={images} totalCount={order.itemCount ?? 0} size="lg" />
 
                 {/* Right: Order Details */}
                 <div className="flex min-w-0 flex-1 flex-col justify-between">
@@ -81,9 +71,7 @@ export default async function OrdersPage() {
                         {formatDate(order.createdAt)}
                       </p>
                     </div>
-                    <Badge
-                      className={`${status.color} shrink-0 flex items-center gap-1`}
-                    >
+                    <Badge className={`${status.color} shrink-0 flex items-center gap-1`}>
                       <StatusIcon className="h-3 w-3" />
                       {status.label}
                     </Badge>
@@ -92,8 +80,7 @@ export default async function OrdersPage() {
                   {/* Bottom: Items + Total */}
                   <div className="mt-2 flex items-end justify-between">
                     <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                      {order.itemCount}{" "}
-                      {order.itemCount === 1 ? "item" : "items"}
+                      {order.itemCount} {order.itemCount === 1 ? "item" : "items"}
                     </p>
                     <p className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
                       {formatPrice(order.total)}

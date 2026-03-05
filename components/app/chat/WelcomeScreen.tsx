@@ -11,16 +11,9 @@ const productSuggestions = [
   "What chairs do you have?",
 ];
 
-const orderSuggestions = [
-  "Where's my order?",
-  "Show me my recent orders",
-  "Has my order shipped?",
-];
+const orderSuggestions = ["Where's my order?", "Show me my recent orders", "Has my order shipped?"];
 
-export function WelcomeScreen({
-  onSuggestionClick,
-  isSignedIn,
-}: WelcomeScreenProps) {
+export function WelcomeScreen({ onSuggestionClick, isSignedIn }: WelcomeScreenProps) {
   return (
     <div className="flex h-full flex-col items-center justify-center text-center px-4">
       <div className="rounded-full bg-amber-100 p-4 dark:bg-amber-900/30">
