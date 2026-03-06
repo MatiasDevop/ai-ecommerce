@@ -16,11 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  getOrderStatus,
-  ORDER_STATUS_CONFIG,
-  type OrderStatusValue,
-} from "@/lib/constants/orderStatus";
+import { getOrderStatus, ORDER_STATUS_CONFIG } from "@/lib/constants/orderStatus";
 
 interface StatusSelectProps extends DocumentHandle {}
 

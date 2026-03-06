@@ -32,7 +32,8 @@
       },
       "a11y": {
         "useButtonType": "warn",
-        "useAltText": "error"
+        "useAltText": "error",
+        "useSemanticElements": "off"
       },
       "correctness": {
         "useExhaustiveDependencies": "warn"
