@@ -1,4 +1,5 @@
-import { generateText, gateway } from "ai";
+import { gateway, generateText } from "ai";
+import { client } from "@/sanity/lib/client";
 import {
   ORDER_STATUS_DISTRIBUTION_QUERY,
   ORDERS_LAST_7_DAYS_QUERY,
@@ -7,7 +8,6 @@ import {
   TOP_SELLING_PRODUCTS_QUERY,
   UNFULFILLED_ORDERS_QUERY,
 } from "@/sanity/queries/stats";
-import { client } from "@/sanity/lib/client";
 
 interface OrderItem {
   quantity: number;
@@ -121,10 +121,7 @@ export async function GET() {
 
     // Find products needing restock (low stock but high sales)
     const productSalesById = new Map(
-      Array.from(productSalesMap.entries()).map(([id, data]) => [
-        id,
-        data.totalQuantity,
-      ])
+      Array.from(productSalesMap.entries()).map(([id, data]) => [id, data.totalQuantity]),
     );
 
     const needsRestock = productsInventory
@@ -162,8 +159,7 @@ export async function GET() {
 
     const avgOrderValue =
       recentOrders.length > 0
-        ? recentOrders.reduce((sum, o) => sum + (o.total || 0), 0) /
-          recentOrders.length
+        ? recentOrders.reduce((sum, o) => sum + (o.total || 0), 0) / recentOrders.length
         : 0;
 
     // Prepare data summary for AI
@@ -203,9 +199,7 @@ export async function GET() {
           daysSinceOrder: getDaysSinceOrder(o.createdAt),
           itemCount: o.itemCount,
         })),
-        urgentOrders: unfulfilledOrders.filter(
-          (o) => getDaysSinceOrder(o.createdAt) > 2
-        ).length,
+        urgentOrders: unfulfilledOrders.filter((o) => getDaysSinceOrder(o.createdAt) > 2).length,
       },
     };
 
@@ -280,18 +274,13 @@ Generate insights in the required JSON format.`,
           highlights: [
             `${revenuePeriod.currentOrderCount || 0} orders this week`,
             `Average order value: £${avgOrderValue.toFixed(2)}`,
-            topProducts[0]
-              ? `Top seller: ${topProducts[0].name}`
-              : "No sales data yet",
+            topProducts[0] ? `Top seller: ${topProducts[0].name}` : "No sales data yet",
           ],
-          trend:
-            revenueChange > 5 ? "up" : revenueChange < -5 ? "down" : "stable",
+          trend: revenueChange > 5 ? "up" : revenueChange < -5 ? "down" : "stable",
         },
         inventory: {
           summary: `${needsRestock.length} products need restocking. ${slowMoving.length} products have no recent sales.`,
-          alerts: needsRestock
-            .slice(0, 2)
-            .map((p) => `${p.name} has only ${p.stock} left`),
+          alerts: needsRestock.slice(0, 2).map((p) => `${p.name} has only ${p.stock} left`),
           recommendations: [
             "Review low stock items before the weekend",
             "Consider promotions for slow-moving inventory",
@@ -329,7 +318,7 @@ Generate insights in the required JSON format.`,
         success: false,
         error: "Failed to generate insights",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

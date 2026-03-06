@@ -1,8 +1,8 @@
 import { Package } from "lucide-react";
+import type { Route } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import type { SearchProduct } from "@/lib/ai/types";
-import { Route } from "next";
 
 interface ProductCardWidgetProps {
   product: SearchProduct;

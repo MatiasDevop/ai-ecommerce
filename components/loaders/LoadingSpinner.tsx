@@ -37,10 +37,7 @@ function LoadingSpinner({
       <Spinner className={cn(sizeStyles[size], "text-muted-foreground")} />
       {text && (
         <span
-          className={cn(
-            "text-muted-foreground font-medium tracking-tight",
-            textSizeStyles[size],
-          )}
+          className={cn("text-muted-foreground font-medium tracking-tight", textSizeStyles[size])}
         >
           {text}
         </span>
