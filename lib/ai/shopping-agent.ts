@@ -3,8 +3,7 @@ import { type Tool, ToolLoopAgent } from "ai";
 import { createGetMyOrdersTool } from "./tools/get-my-orders";
 import { searchProductsTool } from "./tools/search-products";
 
-const OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1";
-const DEFAULT_OPENROUTER_MODEL = "nvidia/nemotron-nano-9b-v2:free"; // A powerful open-source model available for free on Open Router
+const DEFAULT_OPENROUTER_MODEL = `${process.env.OPENROUTER_MODEL}`; // A powerful open-source model available for free on Open Router
 
 interface ShoppingAgentOptions {
   userId: string | null;
@@ -197,7 +196,7 @@ export function createShoppingAgent({ userId }: ShoppingAgentOptions) {
 
   const openRouter = createOpenAI({
     apiKey: openRouterApiKey,
-    baseURL: OPENROUTER_BASE_URL,
+    baseURL: process.env.OPENROUTER_BASE_URL || "https://openrouter.ai/api/v1",
   });
 
   const isAuthenticated = !!userId;

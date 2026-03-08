@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+.turbo/
+
+# Cache and logs
+.cache/
+*.log
+.next/cache/
+
+# Lockfiles (large, rarely needed in context)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lock
+
+# Env files (sensitive, avoid sending to AI)
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Test / coverage (unless you're asking about tests)
+coverage/
+.nyc_output/
+*.test.*
+*.spec.*
+
+# Optional: large or generated assets
+# public/
+# .next/dev/

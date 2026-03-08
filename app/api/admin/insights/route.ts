@@ -1,4 +1,5 @@
-import { gateway, generateText } from "ai";
+import { createOpenAI } from "@ai-sdk/openai";
+import { generateText } from "ai";
 import { client } from "@/sanity/lib/client";
 import {
   ORDER_STATUS_DISTRIBUTION_QUERY,
@@ -203,9 +204,13 @@ export async function GET() {
       },
     };
 
+    const openRouter = createOpenAI({
+      apiKey: process.env.OPENROUTER_API_KEY,
+      baseURL: process.env.OPENROUTER_BASE_URL,
+    });
     // Generate AI insights
     const { text } = await generateText({
-      model: gateway("anthropic/claude-sonnet-4"),
+      model: openRouter.chat(`${process.env.OPENROUTER_MODEL}`),
       system: `You are an expert e-commerce analytics assistant. Analyze the provided store data and generate actionable insights for the store admin.
 
 Your response must be valid JSON with this exact structure:
