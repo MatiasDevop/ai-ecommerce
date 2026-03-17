@@ -36,7 +36,6 @@ function PublishButtonContent({
   const handlePublish = async () => {
     setIsPublishing(true);
     try {
-      // Use the base ID (without drafts. prefix) for publishing
       const baseId = handle.documentId.replace("drafts.", "");
       await apply(
         publishDocument({
@@ -48,9 +47,8 @@ function PublishButtonContent({
       setTimeout(() => setJustPublished(false), 2000);
     } catch (error) {
       console.error("Failed to publish:", error);
-    } finally {
-      setIsPublishing(false);
     }
+    setIsPublishing(false);
   };
 
   // Only show button if there's a draft to publish
@@ -121,7 +119,6 @@ function RevertButtonContent({ size = "icon", ...handle }: RevertButtonProps) {
   const handleRevert = async () => {
     setIsReverting(true);
     try {
-      // Use the base ID (without drafts. prefix) for discarding
       const baseId = handle.documentId.replace("drafts.", "");
       await apply(
         discardDocument({
@@ -133,9 +130,8 @@ function RevertButtonContent({ size = "icon", ...handle }: RevertButtonProps) {
       setTimeout(() => setJustReverted(false), 2000);
     } catch (error) {
       console.error("Failed to revert:", error);
-    } finally {
-      setIsReverting(false);
     }
+    setIsReverting(false);
   };
 
   // Only show button if there's a draft to revert

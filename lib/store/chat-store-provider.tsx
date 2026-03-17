@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, type ReactNode, useContext, useRef } from "react";
+import { createContext, type ReactNode, useContext, useState } from "react";
 import { useStore } from "zustand";
 import { type ChatState, type ChatStore, createChatStore, defaultInitState } from "./chat-store";
 
@@ -21,13 +21,9 @@ interface ChatStoreProviderProps {
  * Wrap your app/(app) layout with this provider
  */
 export const ChatStoreProvider = ({ children, initialState }: ChatStoreProviderProps) => {
-  const storeRef = useRef<ChatStoreApi | null>(null);
+  const [store] = useState(() => createChatStore(initialState ?? defaultInitState));
 
-  if (storeRef.current === null) {
-    storeRef.current = createChatStore(initialState ?? defaultInitState);
-  }
-
-  return <ChatStoreContext.Provider value={storeRef.current}>{children}</ChatStoreContext.Provider>;
+  return <ChatStoreContext.Provider value={store}>{children}</ChatStoreContext.Provider>;
 };
 
 /**

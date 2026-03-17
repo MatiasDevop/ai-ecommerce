@@ -57,31 +57,26 @@ export default async function Home({ searchParams }: PageProps) {
     }
   };
 
-  // Fetch products with filters (server-side via GROQ)
-  const { data: products } = await sanityFetch({
-    query: getQuery(),
-    params: {
-      searchQuery,
-      categorySlug,
-      color,
-      material,
-      minPrice,
-      maxPrice,
-      inStock,
-    },
-  });
-  const { data: categories } = await sanityFetch({
-    query: ALL_CATEGORIES_QUERY,
-  });
-
-  // Fetch feautered products for the carousel
-  const { data: featuredProducts } = await sanityFetch({
-    query: FEATURED_PRODUCTS_QUERY,
-  });
-
-  // console.log("Products:", products);
-  // console.log("Featured Products:", featuredProducts);
-  // console.log("Categories:", categories);
+  const [{ data: products }, { data: categories }, { data: featuredProducts }] = await Promise.all([
+    sanityFetch({
+      query: getQuery(),
+      params: {
+        searchQuery,
+        categorySlug,
+        color,
+        material,
+        minPrice,
+        maxPrice,
+        inStock,
+      },
+    }),
+    sanityFetch({
+      query: ALL_CATEGORIES_QUERY,
+    }),
+    sanityFetch({
+      query: FEATURED_PRODUCTS_QUERY,
+    }),
+  ]);
 
   return (
     <div className="">

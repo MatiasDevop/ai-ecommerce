@@ -67,6 +67,7 @@ export function CategoryTiles({ categories, activeCategory }: CategoryTilesProps
                     src={imageUrl}
                     alt={category.title ?? "Category"}
                     fill
+                    sizes="(max-width: 640px) 224px, 320px"
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 ) : (

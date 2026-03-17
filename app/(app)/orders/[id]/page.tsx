@@ -19,8 +19,7 @@ interface OrderPageProps {
 }
 
 export default async function OrderDetailPage({ params }: OrderPageProps) {
-  const { id } = await params;
-  const { userId } = await auth();
+  const [{ id }, { userId }] = await Promise.all([params, auth()]);
 
   const { data: order } = await sanityFetch({
     query: ORDER_BY_ID_QUERY,

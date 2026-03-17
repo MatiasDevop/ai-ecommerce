@@ -51,12 +51,10 @@ function ImageUploaderContent(handle: DocumentHandle) {
         const file = files[i];
         setUploadProgress(`Uploading ${i + 1} of ${files.length}...`);
 
-        // Upload the asset to Sanity
         const asset = await client.assets.upload("image", file, {
           filename: file.name,
         });
 
-        // Create the image object with a unique key
         newImages.push({
           _type: "image",
           _key: crypto.randomUUID(),
@@ -67,7 +65,6 @@ function ImageUploaderContent(handle: DocumentHandle) {
         });
       }
 
-      // Append new images to existing ones
       const updatedImages = [...currentImages, ...newImages];
       editImages(updatedImages);
 
@@ -76,12 +73,10 @@ function ImageUploaderContent(handle: DocumentHandle) {
       console.error("Upload failed:", error);
       setUploadProgress("Upload failed. Please try again.");
       setTimeout(() => setUploadProgress(null), 3000);
-    } finally {
-      setIsUploading(false);
-      // Reset the file input
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
+    }
+    setIsUploading(false);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 

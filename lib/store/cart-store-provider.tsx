@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, type ReactNode, useContext, useEffect, useRef } from "react";
+import { createContext, type ReactNode, useContext, useEffect, useState } from "react";
 import { useStore } from "zustand";
 import { type CartState, type CartStore, createCartStore, defaultInitState } from "./cart-store";
 
@@ -23,19 +23,13 @@ interface CartStoreProviderProps {
  * @see https://zustand.docs.pmnd.rs/guides/nextjs#hydration-and-asynchronous-storages
  */
 export const CartStoreProvider = ({ children, initialState }: CartStoreProviderProps) => {
-  const storeRef = useRef<CartStoreApi | null>(null);
+  const [store] = useState(() => createCartStore(initialState ?? defaultInitState));
 
-  if (storeRef.current === null) {
-    storeRef.current = createCartStore(initialState ?? defaultInitState);
-  }
-
-  // Manually trigger rehydration on the client after mount
-  // This prevents SSR hydration mismatches since localStorage isn't available on server
   useEffect(() => {
-    storeRef.current?.persist.rehydrate();
-  }, []);
+    store.persist.rehydrate();
+  }, [store]);
 
-  return <CartStoreContext.Provider value={storeRef.current}>{children}</CartStoreContext.Provider>;
+  return <CartStoreContext.Provider value={store}>{children}</CartStoreContext.Provider>;
 };
 
 /**

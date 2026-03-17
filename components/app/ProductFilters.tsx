@@ -2,7 +2,7 @@
 
 import { X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,69 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { COLORS, MATERIALS, SORT_OPTIONS } from "@/lib/constants/filters";
 import type { ALL_CATEGORIES_QUERYResult } from "@/sanity.types";
+
+function FilterLabel({
+  children,
+  isActive,
+  filterKey,
+  onClear,
+}: {
+  children: React.ReactNode;
+  isActive: boolean;
+  filterKey: string;
+  onClear: (key: string) => void;
+}) {
+  return (
+    <div className="mb-2 flex items-center justify-between">
+      <span
+        className={`block text-sm font-medium ${
+          isActive ? "text-zinc-900 dark:text-zinc-100" : "text-zinc-700 dark:text-zinc-300"
+        }`}
+      >
+        {children}
+        {isActive && (
+          <Badge className="ml-2 h-5 bg-amber-500 px-1.5 text-xs text-white hover:bg-amber-500">
+            Active
+          </Badge>
+        )}
+      </span>
+      {isActive && (
+        <button
+          type="button"
+          onClick={() => onClear(filterKey)}
+          className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+          aria-label={`Clear ${filterKey} filter`}
+        >
+          <X className="h-4 w-4" />
+        </button>
+      )}
+    </div>
+  );
+}
+
+function PriceRangeSlider({
+  defaultValue,
+  isActive,
+  onCommit,
+}: {
+  defaultValue: [number, number];
+  isActive: boolean;
+  onCommit: (value: [number, number]) => void;
+}) {
+  const [value, setValue] = useState<[number, number]>(defaultValue);
+
+  return (
+    <Slider
+      min={0}
+      max={5000}
+      step={100}
+      value={value}
+      onValueChange={(v) => setValue(v as [number, number])}
+      onValueCommit={(v) => onCommit(v as [number, number])}
+      className={`mt-4 ${isActive ? "[&_[role=slider]]:border-amber-500 [&_[role=slider]]:ring-amber-500" : ""}`}
+    />
+  );
+}
 
 interface ProductFiltersProps {
   categories: ALL_CATEGORIES_QUERYResult;
@@ -34,15 +97,6 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
   const urlMaxPrice = Number(searchParams.get("maxPrice")) || 5000;
   const currentInStock = searchParams.get("inStock") === "true";
 
-  // Local state for price range (for smooth slider dragging)
-  const [priceRange, setPriceRange] = useState<[number, number]>([urlMinPrice, urlMaxPrice]);
-
-  // Sync local state when URL changes
-  useEffect(() => {
-    setPriceRange([urlMinPrice, urlMaxPrice]);
-  }, [urlMinPrice, urlMaxPrice]);
-
-  // Check which filters are active
   const isSearchActive = !!currentSearch;
   const isCategoryActive = !!currentCategory;
   const isColorActive = !!currentColor;
@@ -58,7 +112,6 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
     isPriceActive ||
     isInStockActive;
 
-  // Count active filters
   const activeFilterCount = [
     isSearchActive,
     isCategoryActive,
@@ -104,42 +157,6 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
     }
   };
 
-  // Helper for filter label with active indicator
-  const FilterLabel = ({
-    children,
-    isActive,
-    filterKey,
-  }: {
-    children: React.ReactNode;
-    isActive: boolean;
-    filterKey: string;
-  }) => (
-    <div className="mb-2 flex items-center justify-between">
-      <span
-        className={`block text-sm font-medium ${
-          isActive ? "text-zinc-900 dark:text-zinc-100" : "text-zinc-700 dark:text-zinc-300"
-        }`}
-      >
-        {children}
-        {isActive && (
-          <Badge className="ml-2 h-5 bg-amber-500 px-1.5 text-xs text-white hover:bg-amber-500">
-            Active
-          </Badge>
-        )}
-      </span>
-      {isActive && (
-        <button
-          type="button"
-          onClick={() => clearSingleFilter(filterKey)}
-          className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
-          aria-label={`Clear ${filterKey} filter`}
-        >
-          <X className="h-4 w-4" />
-        </button>
-      )}
-    </div>
-  );
-
   return (
     <div className="space-y-6 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
       {/* Clear Filters - Show at top when active */}
@@ -163,7 +180,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
 
       {/* Search */}
       <div>
-        <FilterLabel isActive={isSearchActive} filterKey="q">
+        <FilterLabel isActive={isSearchActive} filterKey="q" onClear={clearSingleFilter}>
           Search
         </FilterLabel>
         <form onSubmit={handleSearchSubmit} className="flex gap-2">
@@ -185,7 +202,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
 
       {/* Category */}
       <div>
-        <FilterLabel isActive={isCategoryActive} filterKey="category">
+        <FilterLabel isActive={isCategoryActive} filterKey="category" onClear={clearSingleFilter}>
           Category
         </FilterLabel>
         <Select
@@ -214,7 +231,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
 
       {/* Color */}
       <div>
-        <FilterLabel isActive={isColorActive} filterKey="color">
+        <FilterLabel isActive={isColorActive} filterKey="color" onClear={clearSingleFilter}>
           Color
         </FilterLabel>
         <Select
@@ -243,7 +260,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
 
       {/* Material */}
       <div>
-        <FilterLabel isActive={isMaterialActive} filterKey="material">
+        <FilterLabel isActive={isMaterialActive} filterKey="material" onClear={clearSingleFilter}>
           Material
         </FilterLabel>
         <Select
@@ -272,22 +289,19 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
 
       {/* Price Range */}
       <div>
-        <FilterLabel isActive={isPriceActive} filterKey="price">
-          Price Range: £{priceRange[0]} - £{priceRange[1]}
+        <FilterLabel isActive={isPriceActive} filterKey="price" onClear={clearSingleFilter}>
+          Price Range: £{urlMinPrice} - £{urlMaxPrice}
         </FilterLabel>
-        <Slider
-          min={0}
-          max={5000}
-          step={100}
-          value={priceRange}
-          onValueChange={(value) => setPriceRange(value as [number, number])}
-          onValueCommit={([min, max]) =>
+        <PriceRangeSlider
+          key={`${urlMinPrice}-${urlMaxPrice}`}
+          defaultValue={[urlMinPrice, urlMaxPrice]}
+          isActive={isPriceActive}
+          onCommit={([min, max]) =>
             updateParams({
               minPrice: min > 0 ? min : null,
               maxPrice: max < 5000 ? max : null,
             })
           }
-          className={`mt-4 ${isPriceActive ? "[&_[role=slider]]:border-amber-500 [&_[role=slider]]:ring-amber-500" : ""}`}
         />
       </div>
 

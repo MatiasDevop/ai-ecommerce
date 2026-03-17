@@ -1,13 +1,14 @@
 "use client";
 
 import { PanelLeft, PanelLeftClose } from "lucide-react";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Button } from "@/components/ui/button";
 import type {
   ALL_CATEGORIES_QUERYResult,
   FILTER_PRODUCTS_BY_NAME_QUERYResult,
 } from "@/sanity.types";
 import { ProductFilters } from "./ProductFilters";
+import { ProductFiltersSkeleton } from "./ProductFiltersSkeleton";
 import { ProductGrid } from "./ProductGrid";
 
 interface ProductSectionProps {
@@ -65,7 +66,9 @@ export function ProductSection({ categories, products, searchQuery }: ProductSec
             filtersOpen ? "w-full lg:w-72 lg:opacity-100" : "hidden lg:hidden"
           }`}
         >
-          <ProductFilters categories={categories} />
+          <Suspense fallback={<ProductFiltersSkeleton />}>
+            <ProductFilters categories={categories} />
+          </Suspense>
         </aside>
 
         {/* Product Grid - expands to full width when filters hidden */}
